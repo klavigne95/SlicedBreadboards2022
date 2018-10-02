@@ -27,8 +27,90 @@ public class Auto extends LinearOpMode {
         //Wait for the match to begin, presses start button
         waitForStart();
         while (opModeIsActive()) {
+            // Get Down
+            robot.lift.setPower(.5);
+            wait1(10);
+            robot.lift.setPower(0);
+            robot.drive.veritical(.1);
+            robot.lift.setPower(-.5);
+            wait1(10);
+            robot.lift.setPower(0);
 
+            // If Pointed at Square ->
+            if(robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.red){
+                // Scan Glyphs
+
+                // Move Gold
+
+                // Set Marker
+                robot.drive.turn(RE_ADJUST);
+                robot.drive.vertical(10);
+                robot.deployMarker();
+                // Park in Crater
+                robot.drive.turn(POINT_TOWARDS_CRATER);
+                robot.drive.vertical(10); // CAN USE HORIZONTAL?
+            } else if (robot.startPosition == StartPosition.left && robot.teamColor == TeamColor.blue){
+                // Scan Glyphs
+
+                // Move Gold
+
+                // Set Marker
+                robot.drive.turn(RE_ADJUST);
+                robot.drive.vertical(10);
+                robot.deployMarker();
+                // Park in Crater
+                robot.drive.turn(POINT_TOWARDS_CRATER);
+                robot.drive.vertical(10); // CAN USE HORIZONTAL?
+
+            // If Pointed at Crater
+            } else if (robot.startPosition == StartPosition.right && robot.teamColor == TeamColor.red){
+                //Scan Glyphs
+
+                // Set Marker
+                robot.drive.turn(45);
+                robot.drive.vertical(10);
+                robot.drive.turn(90);
+                robot.drive.vertical(12);
+                robot.deployMarker();
+                // Park in Crater, While Moving Gold
+                robot.drive.turn(180);
+                robot.drive.vertical(11);
+                robot.drive.turn(ANGLE_PARALLEL_CRATER/GLYPHS);
+                if(glyphPosition == "left"){
+                    robot.drive.vertical(5);
+                } else if (glyphPosition == "middle"){
+                    robot.drive.vertical
+                } else {
+                    robot.drive.vertical(4);
+                }
+                robot.drive.horizontal(5);
+            } else if (robot.startPosition == StartPosition.righ && robot.teamColor == TeamColor.blue){
+                //Scan Glyphs
+
+                // Set Marker
+                robot.drive.turn(45);
+                robot.drive.vertical(10);
+                robot.drive.turn(90);
+                robot.drive.vertical(12);
+                robot.deployMarker();
+                // Park in Crater, While Moving Gold
+                robot.drive.turn(180);
+                robot.drive.vertical(11);
+                robot.drive.turn(ANGLE_PARALLEL_CRATER/GLYPHS);
+                if(glyphPosition == "left"){
+                    robot.drive.vertical(5);
+                } else if (glyphPosition == "middle"){
+                    robot.drive.vertical
+                } else {
+                    robot.drive.vertical(4);
+                }
+                robot.drive.horizontal(5);
+            }
         }
+    }
+
+    private void center(){
+
     }
 
     private void inputGameConfig() throws InterruptedException {
@@ -44,7 +126,7 @@ public class Auto extends LinearOpMode {
         }
         telemetry.addData("Chosen team color", robot.teamColor);
 
-        telemetry.addData("Input which side", "Left or right (use triggers)");
+        telemetry.addData("Input which side", "Left (Square) or right (Crater) (use triggers)");
         telemetry.update();
         while (gamepad1.left_trigger < 0.5 && gamepad1.right_trigger < 0.5) {
         }

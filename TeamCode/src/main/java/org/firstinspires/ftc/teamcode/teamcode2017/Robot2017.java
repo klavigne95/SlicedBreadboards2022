@@ -22,24 +22,25 @@ import java.util.concurrent.TimeUnit;
  */
 public class Robot2017 {
     //servo positions go from 0 to 1.0, must add suffix to make it a float because Java acts stupid sometimes
-    final float jewelservodown = .90f;
-    final float jewelservoup = .20f;
-    final float griplin = 0.04f;
-    final float griprin = .90f;
-    final float griplout = .42f;
-    final float griprout = .48f;
+    //final float jewelservodown = .90f;
+    //final float jewelservoup = .20f;
+    //final float griplin = 0.04f;
+    //final float griprin = .90f;
+    //final float griplout = .42f;
+    //final float griprout = .48f;
     public TeamColor teamColor;
     public StartPosition startPosition;
     public DcMotor flMotor;
     public DcMotor frMotor;
     public DcMotor blMotor;
     public DcMotor brMotor;
-    public Servo gripl;
-    public Servo gripr;
-    public DcMotor lift1;
-    public DcMotor armmotor;
-    public Servo jewelservo;
-    public ColorSensor cs;
+    public Servo markerServo;
+    //public Servo gripl;
+    //public Servo gripr;
+    public DcMotor lift;
+    //public DcMotor armmotor;
+    //public Servo jewelservo;
+    //public ColorSensor cs;
     public DriveTrain drive;
     private HardwareMap hwMap;
     private Telemetry telemetry;
@@ -61,7 +62,7 @@ public class Robot2017 {
     public void setTime(ElapsedTime time) {
         this.time = time;
     }
-
+/*
     public void ungrip() {
         gripl.setPosition(griplout);
         gripr.setPosition(griprout);
@@ -71,8 +72,11 @@ public class Robot2017 {
         gripl.setPosition(griplin);
         gripr.setPosition(griprin);
     }
+*/
 
-
+    public void deployMarker(){
+        markerServo.setposition(.90f);
+    }
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap hwMap) {
         initHardwareMap(hwMap);
@@ -87,15 +91,15 @@ public class Robot2017 {
         frMotor = hwMap.dcMotor.get("frmotor");
         blMotor = hwMap.dcMotor.get("blmotor");
         brMotor = hwMap.dcMotor.get("brmotor");
-        lift1 = hwMap.dcMotor.get("liftmotor");
-        lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armmotor = hwMap.dcMotor.get("armmotor");
-        jewelservo = hwMap.servo.get("jewelservo");
-        gripl = hwMap.servo.get("gripl");
-        gripr = hwMap.servo.get("gripr");
-        jewelservo.setDirection(Servo.Direction.FORWARD);
-        cs = hwMap.colorSensor.get("colorSensor");
-        cs.enableLed(true);
+        lift = hwMap.dcMotor.get("liftmotor");
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //armmotor = hwMap.dcMotor.get("armmotor");
+        //jewelservo = hwMap.servo.get("jewelservo");
+        //gripl = hwMap.servo.get("gripl");
+        //gripr = hwMap.servo.get("gripr");
+        //jewelservo.setDirection(Servo.Direction.FORWARD);
+        //cs = hwMap.colorSensor.get("colorSensor");
+        //cs.enableLed(true);
 
 
     }
