@@ -118,8 +118,8 @@ public class Robot2017 {
                 (WHEEL_DIAMETER_INCHES * Math.PI);
         static final double ROBOT_WIDTH = 17.0;
         static final double TURN_LENGTH = ROBOT_WIDTH * Math.PI / 4;
-        DcMotor.Direction leftDefaultDir = DcMotor.Direction.FORWARD;
-        DcMotor.Direction rightDefaultDir = DcMotor.Direction.REVERSE;
+        DcMotor.Direction leftDefaultDir = DcMotor.Direction.REVERSE; //Hehe
+        DcMotor.Direction rightDefaultDir = DcMotor.Direction.FORWARD; //Hehe
 
 
         Queue<PathSeg> paths = new LinkedBlockingQueue();
@@ -152,35 +152,35 @@ public class Robot2017 {
             brMotor.setDirection(rightDefaultDir);
         }
 
-        public void horizontal(double length) throws InterruptedException {
-            PathSeg right = new PathSeg(-length, length, length, -length, time);
+        public void horizontal(double length) throws InterruptedException { //Hehe
+            PathSeg right = new PathSeg(length, -length, -length, length, time);
             startPath(right);
             wait1((int) length / 12 * 500);
             wait1(1000);
         }
 
-        public void turnRight() throws InterruptedException {
-            PathSeg left = new PathSeg(-2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, time);
+        public void turnRight() throws InterruptedException { //Hehe
+            PathSeg left = new PathSeg(2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, time);
             startPath(left);
             wait1(2000);
 
         }
 
-        public void turnLeft() throws InterruptedException {
-            PathSeg right = new PathSeg(2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, time);
+        public void turnLeft() throws InterruptedException { //Hehe
+            PathSeg left = new PathSeg(-2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, time);
             startPath(right);
             wait1(2000);
         }
 
-        public void turn(int degree) throws InterruptedException {
-            PathSeg turn = new PathSeg(-2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, -2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, time);
+        public void turn(int degree) throws InterruptedException { //Hehe
+            PathSeg turn = new PathSeg(2 * TURN_LENGTH * degree / 90, -2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, -2 * TURN_LENGTH * degree / 90, time);
             startPath(turn);
             wait1(Math.abs(degree * 10));
             wait1(1000);
         }
 
         public void vertical(double length) throws InterruptedException {
-            PathSeg path = new PathSeg(-length, -length, -length, -length, time);
+            PathSeg path = new PathSeg(length, length, length, length, time); //Hehe
             startPath(path);
             wait1((int) length / 12 * 500);
             wait1(1000);
