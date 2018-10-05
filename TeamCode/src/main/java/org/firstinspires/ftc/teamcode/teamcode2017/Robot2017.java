@@ -74,9 +74,6 @@ public class Robot2017 {
     }
 */
 
-    public void deployMarker(){
-        markerServo.setposition(.90f);
-    }
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap hwMap) {
         initHardwareMap(hwMap);

@@ -27,13 +27,18 @@ public class Auto extends LinearOpMode {
         //Wait for the match to begin, presses start button
         waitForStart();
         while (opModeIsActive()) {
+            int RE_ADJUST = 0;
+            int POINT_TOWARDS_CRATER = 0;
+            int ANGLE_PARALLEL_CRATER = 0;
+            String glyphPosition = "left";
+
             // Get Down
             robot.lift.setPower(.5);
-            wait1(10);
+            wait1(500);
             robot.lift.setPower(0);
             robot.drive.veritical(.1);
             robot.lift.setPower(-.5);
-            wait1(10);
+            wait1(500);
             robot.lift.setPower(0);
 
             // If Pointed at Square ->
@@ -45,7 +50,7 @@ public class Auto extends LinearOpMode {
                 // Set Marker
                 robot.drive.turn(RE_ADJUST);
                 robot.drive.vertical(10);
-                robot.deployMarker();
+                deployMarker();
                 // Park in Crater
                 robot.drive.turn(POINT_TOWARDS_CRATER);
                 robot.drive.vertical(10); // CAN USE HORIZONTAL?
@@ -57,7 +62,7 @@ public class Auto extends LinearOpMode {
                 // Set Marker
                 robot.drive.turn(RE_ADJUST);
                 robot.drive.vertical(10);
-                robot.deployMarker();
+                deployMarker();
                 // Park in Crater
                 robot.drive.turn(POINT_TOWARDS_CRATER);
                 robot.drive.vertical(10); // CAN USE HORIZONTAL?
@@ -71,7 +76,7 @@ public class Auto extends LinearOpMode {
                 robot.drive.vertical(10);
                 robot.drive.turn(90);
                 robot.drive.vertical(12);
-                robot.deployMarker();
+                deployMarker();
                 // Park in Crater, While Moving Gold
                 robot.drive.turn(180);
                 robot.drive.vertical(11);
@@ -79,9 +84,9 @@ public class Auto extends LinearOpMode {
                 if(glyphPosition == "left"){
                     robot.drive.vertical(5);
                 } else if (glyphPosition == "middle"){
-                    robot.drive.vertical
-                } else {
                     robot.drive.vertical(4);
+                } else {
+                    robot.drive.vertical(3);
                 }
                 robot.drive.horizontal(5);
             } else if (robot.startPosition == StartPosition.righ && robot.teamColor == TeamColor.blue){
@@ -92,25 +97,28 @@ public class Auto extends LinearOpMode {
                 robot.drive.vertical(10);
                 robot.drive.turn(90);
                 robot.drive.vertical(12);
-                robot.deployMarker();
+                deployMarker();
                 // Park in Crater, While Moving Gold
                 robot.drive.turn(180);
                 robot.drive.vertical(11);
-                robot.drive.turn(ANGLE_PARALLEL_CRATER/GLYPHS);
+                robot.drive.turn(ANGLE_PARALLEL_CRATER);
                 if(glyphPosition == "left"){
                     robot.drive.vertical(5);
                 } else if (glyphPosition == "middle"){
-                    robot.drive.vertical
-                } else {
                     robot.drive.vertical(4);
+                } else {
+                    robot.drive.vertical(3);
                 }
                 robot.drive.horizontal(5);
             }
         }
     }
 
-    private void center(){
-
+    public void deployMarker() throws InterruptedException{
+        robot.markerServo.setPosition(.90f);
+        wait1(1000);
+        robot.markerServo.setPosition(.20f);
+        wait1(1000);
     }
 
     private void inputGameConfig() throws InterruptedException {

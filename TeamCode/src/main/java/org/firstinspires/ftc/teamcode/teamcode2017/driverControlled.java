@@ -24,15 +24,15 @@ public class driverControlled extends LinearOpMode {
         runtime.reset();
         double leftPow = 0;
         double rightPow = 0;
-        double armPow = 0;
-        double liftPow = 0;
+        //double armPow = 0;
+        //double liftPow = 0;
         double[] targets = {0, 0};
         double[] powers = {0, 0};
         //motor power is from -1.0 to 1.0;
         telemetry.addData("Status", "Initialized");
-        telemetry.addData("colorsensor", robot.cs.getDeviceName());
+        //telemetry.addData("colorsensor", robot.cs.getDeviceName());
         telemetry.update();
-        robot.jewelservo.setPosition(robot.jewelservoup);
+        //robot.jewelservo.setPosition(robot.jewelservoup);
         while (opModeIsActive()) {
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
@@ -41,7 +41,7 @@ public class driverControlled extends LinearOpMode {
             leftPow = (double) gamepad1.left_stick_y / 3 * 2;
             telemetry.addData("left", "Running to %7d :%7d", robot.flMotor.getCurrentPosition(), robot.blMotor.getCurrentPosition());
             telemetry.addData("right", "Running to %7d :%7d", robot.frMotor.getCurrentPosition(), robot.brMotor.getCurrentPosition());
-
+            /*
             //arm
             if (gamepad2.a) {
                 armPow = .5;
@@ -51,7 +51,7 @@ public class driverControlled extends LinearOpMode {
                 armPow = -.5;
 
             } else {
-                armPow = 0;
+                //armPow = 0;
             }
 
 
@@ -61,6 +61,7 @@ public class driverControlled extends LinearOpMode {
             } else if (gamepad2.y) {
                 robot.grip();
             }
+
 
             if (gamepad2.dpad_up) {
                 liftPow = -.4;
@@ -80,27 +81,27 @@ public class driverControlled extends LinearOpMode {
                 robot.jewelservo.setPosition(robot.jewelservo.getPosition() + .01);
             } else if (gamepad1.right_bumper && robot.jewelservo.getPosition() > .011) {
                 robot.jewelservo.setPosition(robot.jewelservo.getPosition() - .01);
-            }
+            }*/
 
-            /*targets[0] = rightPow;
+            targets[0] = rightPow;
             targets[1] = leftPow;
             powers[0] = robot.frMotor.getPower();
             powers[1] = robot.flMotor.getPower();
-            targets = accel(powers, targets);*/
+            targets = accel(powers, targets);
             //use this stuff for acceleration, sub in for the motor powers below
 
-            telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
-            telemetry.addData("jewelservo direction", robot.jewelservo.getDirection());
-            telemetry.addData("red", robot.cs.red());
-            telemetry.addData("blue", robot.cs.blue());
+            //telemetry.addData("jewelservo position", robot.jewelservo.getPosition());
+            //telemetry.addData("jewelservo direction", robot.jewelservo.getDirection());
+            //telemetry.addData("red", robot.cs.red());
+            //telemetry.addData("blue", robot.cs.blue());
             telemetry.update();
 
             robot.flMotor.setPower(leftPow);
             robot.frMotor.setPower(rightPow);
             robot.blMotor.setPower(leftPow);
             robot.brMotor.setPower(rightPow);
-            robot.armmotor.setPower(armPow);
-            robot.lift1.setPower(liftPow);
+            //robot.armmotor.setPower(armPow);
+            //robot.lift1.setPower(liftPow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }

@@ -24,15 +24,15 @@ public class singleJoystick extends LinearOpMode {
         runtime.reset();
         double leftPow = 0;
         double rightPow = 0;
-        double armPow = 0;
-        double liftPow = 0;
+        //double armPow = 0;
+        //double liftPow = 0;
         double pow = 0;
         double angle = 0;
         double x = 0;
         double y = 0;
         //motor power is from -1.0 to 1.0;
         telemetry.addData("Status", "Initialized");
-        telemetry.addData("colorsensor", robot.cs.getDeviceName());
+        //telemetry.addData("colorsensor", robot.cs.getDeviceName());
         telemetry.update();
         while (opModeIsActive()) {
 
@@ -58,6 +58,7 @@ public class singleJoystick extends LinearOpMode {
                 rightPow = -rightPow;
             }
 
+            /*
             if (gamepad1.a) {
                 armPow = .5;
 
@@ -95,14 +96,13 @@ public class singleJoystick extends LinearOpMode {
             telemetry.addData("red", robot.cs.red());
             telemetry.addData("green", robot.cs.green());
             telemetry.addData("blue", robot.cs.blue());
-
+            */
             telemetry.update();
-
             robot.flMotor.setPower(leftPow);
             robot.frMotor.setPower(rightPow);
-            robot.armmotor.setPower(armPow);
+            //robot.armmotor.setPower(armPow);
 
-            robot.lift1.setPower(liftPow);
+            //robot.lift1.setPower(liftPow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }
