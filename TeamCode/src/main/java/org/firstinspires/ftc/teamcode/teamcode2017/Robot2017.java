@@ -167,7 +167,7 @@ public class Robot2017 {
         }
 
         public void turnLeft() throws InterruptedException { //Hehe
-            PathSeg left = new PathSeg(-2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, time);
+            PathSeg right = new PathSeg(-2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, time);
             startPath(right);
             wait1(2000);
         }
