@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.game.robot.TeamColor;
 
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name = "Autonomous", group = "red")
+@Autonomous(name = "AltAutonomous", group = "red")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class Auto extends LinearOpMode {
+public class AlternateAuto extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -73,12 +73,14 @@ public class Auto extends LinearOpMode {
                 // Set Marker
                 robot.drive.turn(45);
                 robot.drive.vertical(10);
-                robot.drive.turn(90);
-                robot.drive.vertical(12);
+                robot.drive.turn(45);
+                robot.drive.horizontal(10);
+                robot.drive.turn(-45);
+                robot.drive.vertical(10);
                 deployMarker();
                 // Park in Crater, While Moving Gold
-                robot.drive.turn(180);
-                robot.drive.vertical(11);
+                robot.drive.turn(-90);
+                robot.drive.vertical(10);
                 robot.drive.turn(ANGLE_PARALLEL_CRATER);
                 if(glyphPosition == "left"){
                     robot.drive.vertical(5);
@@ -94,12 +96,14 @@ public class Auto extends LinearOpMode {
                 // Set Marker
                 robot.drive.turn(45);
                 robot.drive.vertical(10);
-                robot.drive.turn(90);
-                robot.drive.vertical(12);
+                robot.drive.turn(45);
+                robot.drive.horizontal(10);
+                robot.drive.turn(-45);
+                robot.drive.vertical(10);
                 deployMarker();
                 // Park in Crater, While Moving Gold
-                robot.drive.turn(180);
-                robot.drive.vertical(11);
+                robot.drive.turn(-90);
+                robot.drive.vertical(10);
                 robot.drive.turn(ANGLE_PARALLEL_CRATER);
                 if(glyphPosition == "left"){
                     robot.drive.vertical(5);
@@ -133,7 +137,7 @@ public class Auto extends LinearOpMode {
         }
         telemetry.addData("Chosen team color", robot.teamColor);
 
-        telemetry.addData("Input which side", "Left (Square) or right (Crater) (use triggers)");
+        telemetry.addData("Input which side", "Marker/Square (Left) or Crater (Right) (use triggers)");
         telemetry.update();
         while (gamepad1.left_trigger < 0.5 && gamepad1.right_trigger < 0.5) {
         }
