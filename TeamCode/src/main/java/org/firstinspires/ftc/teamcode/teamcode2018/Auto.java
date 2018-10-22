@@ -45,25 +45,69 @@ public class Auto extends LinearOpMode {
                 // Scan Glyphs
 
                 // Move Gold
-
+                int angleToMineral;
+                int angleToMarker;
+                int angleToCrater;
+                if (glyphPosition == "left") {
+                    angleToMineral = -30;
+                    angleToMarker = 52;
+                    angleToCrater = 107;
+                } else if (glyphPosition == "middle"){
+                    angleToMineral = 0;
+                    angleToMarker = 0;
+                    angleToCrater = 135;
+                } else if (glyphPosition == "right"){
+                    angleToMineral = 30;
+                    angleToMarker = -52;
+                    angleToCrater = 158;
+                } else {
+                    angleToMineral = 0;
+                    angleToMarker = 0;
+                    angleToCrater = 135;
+                }
+                robot.drive.turn(angleToMineral);
+                robot.drive.vertical(10);
+                robot.drive.turn(angleToMarker);
+                robot.drive.vertical(10);
                 // Set Marker
-                robot.drive.turn(RE_ADJUST);
                 robot.drive.vertical(10);
                 deployMarker();
                 // Park in Crater
-                robot.drive.turn(POINT_TOWARDS_CRATER);
+                robot.drive.turn(angleToCrater);
                 robot.drive.vertical(10); // CAN USE HORIZONTAL?
             } else if (robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.blue){
                 // Scan Glyphs
 
                 // Move Gold
-
+                int angleToMineral;
+                int angleToMarker;
+                int angleToCrater;
+                if (glyphPosition == "left") {
+                    angleToMineral = -30;
+                    angleToMarker = 52;
+                    angleToCrater = 107;
+                } else if (glyphPosition == "middle"){
+                    angleToMineral = 0;
+                    angleToMarker = 0;
+                    angleToCrater = 135;
+                } else if (glyphPosition == "right"){
+                    angleToMineral = 30;
+                    angleToMarker = -52;
+                    angleToCrater = 158;
+                } else {
+                    angleToMineral = 0;
+                    angleToMarker = 0;
+                    angleToCrater = 135;
+                }
+                robot.drive.turn(angleToMineral);
+                robot.drive.vertical(10);
+                robot.drive.turn(angleToMarker);
+                robot.drive.vertical(10);
                 // Set Marker
-                robot.drive.turn(RE_ADJUST);
                 robot.drive.vertical(10);
                 deployMarker();
                 // Park in Crater
-                robot.drive.turn(POINT_TOWARDS_CRATER);
+                robot.drive.turn(angleToCrater);
                 robot.drive.vertical(10); // CAN USE HORIZONTAL?
 
             // If Pointed at Crater
@@ -73,13 +117,13 @@ public class Auto extends LinearOpMode {
                 // Set Marker
                 robot.drive.turn(45);
                 robot.drive.vertical(10);
-                robot.drive.turn(90);
-                robot.drive.vertical(12);
+                robot.drive.turn(-90);
+                robot.drive.vertical(10);
                 deployMarker();
                 // Park in Crater, While Moving Gold
                 robot.drive.turn(180);
-                robot.drive.vertical(11);
-                robot.drive.turn(ANGLE_PARALLEL_CRATER);
+                robot.drive.vertical(10);
+                robot.drive.turn(45);
                 if(glyphPosition == "left"){
                     robot.drive.vertical(5);
                 } else if (glyphPosition == "middle"){
@@ -94,13 +138,13 @@ public class Auto extends LinearOpMode {
                 // Set Marker
                 robot.drive.turn(45);
                 robot.drive.vertical(10);
-                robot.drive.turn(90);
-                robot.drive.vertical(12);
+                robot.drive.turn(-90);
+                robot.drive.vertical(10);
                 deployMarker();
                 // Park in Crater, While Moving Gold
                 robot.drive.turn(180);
-                robot.drive.vertical(11);
-                robot.drive.turn(ANGLE_PARALLEL_CRATER);
+                robot.drive.vertical(10);
+                robot.drive.turn(45);
                 if(glyphPosition == "left"){
                     robot.drive.vertical(5);
                 } else if (glyphPosition == "middle"){
