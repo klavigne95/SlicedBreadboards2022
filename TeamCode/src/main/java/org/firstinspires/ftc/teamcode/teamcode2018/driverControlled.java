@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "driverControlled", group = "red")  // @Autonomous(...) is the other common choice
+@TeleOp(name = "driverControlled", group = "Drive")  // @Autonomous(...) is the other common choice
 //@Disabled
 
 public class driverControlled extends LinearOpMode {

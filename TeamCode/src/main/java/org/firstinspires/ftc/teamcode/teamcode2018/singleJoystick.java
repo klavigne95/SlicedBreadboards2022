@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "singleJoystick", group = "red")  // @Autonomous(...) is the other common choice
+@TeleOp(name = "singleJoystick", group = "Drive")  // @Autonomous(...) is the other common choice
 //@Disabled
 
 public class singleJoystick extends LinearOpMode {

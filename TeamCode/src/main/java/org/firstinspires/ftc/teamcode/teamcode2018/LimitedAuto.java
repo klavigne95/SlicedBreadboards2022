@@ -16,7 +16,7 @@ import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.LEFT;
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.RIGHT;
 
-@Autonomous(name = "LimitAutonomous", group = "red")
+@TeleOp(name = "LimitAutonomous", group = "Auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
 public class LimitedAuto extends LinearOpMode {
     private Robot2017 robot;

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teamcode2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
@@ -12,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by 20smcnamara on 10/19/18.
  */
-
+@TeleOp(name = "Yeet", group = "Test")
 public class yeet extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
