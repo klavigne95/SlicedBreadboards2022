@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.teamcode2018;
 
+import com.disnodeteam.dogecv.CameraViewDisplay;
+import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -9,28 +12,29 @@ import org.firstinspires.ftc.teamcode.game.robot.TeamColor;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.CENTER;
+import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.LEFT;
+import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.RIGHT;
+
 @Autonomous(name = "AltAutonomous", group = "red")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
 public class AlternateAuto extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
+    private SamplingOrderDetector detector;
 
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017(TeamColor.red, StartPosition.marker);
         robot.init(hardwareMap);
         robot.setTelemetry(telemetry);
         robot.setTime(runtime);
+        initDetector();
 
         inputGameConfig();
 
         //Wait for the match to begin, presses start button
         waitForStart();
         while (opModeIsActive()) {
-            int RE_ADJUST = 0;
-            int POINT_TOWARDS_CRATER = 0;
-            int ANGLE_PARALLEL_CRATER = 0;
-            String glyphPosition = "left";
-
             // Get Down
             robot.lift.setPower(.5);
             wait1(500);
@@ -40,23 +44,28 @@ public class AlternateAuto extends LinearOpMode {
             wait1(500);
             robot.lift.setPower(0);
 
+            SamplingOrderDetector.GoldLocation glyphPosition;
+            if(detector.isFound()){
+                glyphPosition = detector.getCurrentOrder();
+            } else {
+                // MOVE ROBOT TO FIND IT!!! WRITE LATER
+                glyphPosition =  CENTER;
+            }
             // If Pointed at Square ->
             if(robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.red){
-                // Scan Glyphs
-
                 // Move Gold
                 int angleToMineral;
                 int angleToMarker;
                 int angleToCrater;
-                if (glyphPosition == "left") {
+                if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
                     angleToCrater = 107;
-                } else if (glyphPosition == "middle"){
+                } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
                     angleToCrater = 135;
-                } else if (glyphPosition == "right"){
+                } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
                     angleToCrater = 158;
@@ -76,21 +85,19 @@ public class AlternateAuto extends LinearOpMode {
                 robot.drive.turn(angleToCrater);
                 robot.drive.vertical(10); // CAN USE HORIZONTAL?
             } else if (robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.blue){
-                // Scan Glyphs
-
                 // Move Gold
                 int angleToMineral;
                 int angleToMarker;
                 int angleToCrater;
-                if (glyphPosition == "left") {
+                if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
                     angleToCrater = 107;
-                } else if (glyphPosition == "middle"){
+                } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
                     angleToCrater = 135;
-                } else if (glyphPosition == "right"){
+                } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
                     angleToCrater = 158;
@@ -112,8 +119,6 @@ public class AlternateAuto extends LinearOpMode {
 
                 // If Pointed at Crater
             } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.red){
-                //Scan Glyphs
-
                 // Set Marker
                 robot.drive.turn(45);
                 robot.drive.vertical(10);
@@ -126,17 +131,15 @@ public class AlternateAuto extends LinearOpMode {
                 robot.drive.turn(90);
                 robot.drive.vertical(10);
                 robot.drive.turn(45);
-                if(glyphPosition == "left"){
+                if(glyphPosition == LEFT){
                     robot.drive.vertical(5);
-                } else if (glyphPosition == "middle"){
+                } else if (glyphPosition == CENTER){
                     robot.drive.vertical(4);
                 } else {
                     robot.drive.vertical(3);
                 }
                 robot.drive.horizontal(5);
             } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.blue){
-                //Scan Glyphs
-
                 // Set Marker
                 robot.drive.turn(45);
                 robot.drive.vertical(10);
@@ -149,9 +152,9 @@ public class AlternateAuto extends LinearOpMode {
                 robot.drive.turn(90);
                 robot.drive.vertical(10);
                 robot.drive.turn(45);
-                if(glyphPosition == "left"){
+                if(glyphPosition == LEFT){
                     robot.drive.vertical(5);
-                } else if (glyphPosition == "middle"){
+                } else if (glyphPosition == CENTER){
                     robot.drive.vertical(4);
                 } else {
                     robot.drive.vertical(3);
@@ -206,4 +209,23 @@ public class AlternateAuto extends LinearOpMode {
         //make sure to camera.release() after using
     }
 
+    public void initDetector(){
+        telemetry.addData("Status", "DogeCV 2018.0 - Sampling Order Example");
+
+        detector = new SamplingOrderDetector();
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
+        detector.useDefaults();
+
+        detector.downscale = 0.4; // How much to downscale the input frames
+
+        // Optional Tuning
+        detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
+        //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
+        detector.maxAreaScorer.weight = 0.001;
+
+        detector.ratioScorer.weight = 15;
+        detector.ratioScorer.perfectRatio = 1.0;
+
+        detector.enable();
+    }
 }
