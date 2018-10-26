@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.teamcode2018;
+package org.firstinspires.ftc.teamcode.teamcode2017;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
@@ -16,9 +16,9 @@ import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.LEFT;
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.RIGHT;
 
-@TeleOp(name = "LimitAutonomous", group = "Auto")
+@TeleOp(name = "AltAutonomous", group = "Auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class LimitedAuto extends LinearOpMode {
+public class AlternateAuto extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private SamplingOrderDetector detector;
@@ -36,6 +36,7 @@ public class LimitedAuto extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             // Get Down
+            /*
             robot.lift.setPower(.5);
             wait1(500);
             robot.lift.setPower(0);
@@ -43,33 +44,36 @@ public class LimitedAuto extends LinearOpMode {
             robot.lift.setPower(-.5);
             wait1(500);
             robot.lift.setPower(0);
-
-            //SCAN GLYPHS
+            */
             SamplingOrderDetector.GoldLocation glyphPosition;
             if(detector.isFound()){
                 glyphPosition = detector.getCurrentOrder();
             } else {
-                // MOVE ROBOT TO FIND IT!!! WRITE LATER
+                // TODO: Move robot to find glyphs
                 glyphPosition =  CENTER;
             }
-
             // If Pointed at Square ->
             if(robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.red){
                 // Move Gold
                 int angleToMineral;
                 int angleToMarker;
+                int angleToCrater;
                 if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
+                    angleToCrater = 107;
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
+                    angleToCrater = 135;
                 } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
+                    angleToCrater = 158;
                 } else {
                     angleToMineral = 0;
                     angleToMarker = 0;
+                    angleToCrater = 135;
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(10);
@@ -79,23 +83,29 @@ public class LimitedAuto extends LinearOpMode {
                 robot.drive.vertical(10);
                 deployMarker();
                 // Park in Crater
-                //NOT IN LIMITED
+                robot.drive.turn(angleToCrater);
+                robot.drive.vertical(10); // CAN USE HORIZONTAL?
             } else if (robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.blue){
                 // Move Gold
                 int angleToMineral;
                 int angleToMarker;
+                int angleToCrater;
                 if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
+                    angleToCrater = 107;
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
+                    angleToCrater = 135;
                 } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
+                    angleToCrater = 158;
                 } else {
                     angleToMineral = 0;
                     angleToMarker = 0;
+                    angleToCrater = 135;
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(10);
@@ -105,59 +115,60 @@ public class LimitedAuto extends LinearOpMode {
                 robot.drive.vertical(10);
                 deployMarker();
                 // Park in Crater
-                //NOT IN LIMITED
+                robot.drive.turn(angleToCrater);
+                robot.drive.vertical(10); // CAN USE HORIZONTAL?
+
+                // If Pointed at Crater
             } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.red){
-                // Set Marker NOT IN LIMITED
-                int angleToMineral;
-                int angleToCrater;
-                // Park in Crater, While Moving Gold
-                if(glyphPosition == LEFT){
-                    angleToMineral = -30;
-                    angleToCrater = 30;
-                } else if (glyphPosition == CENTER){
-                    angleToMineral = 0;
-                    angleToCrater = 0;
-                } else if (glyphPosition == RIGHT) {
-                    angleToMineral = 30;
-                    angleToCrater = -15;
-                } else {
-                    angleToMineral = 0;
-                    angleToCrater = 0;
-                }
-                robot.drive.turn(angleToMineral);
+                // Set Marker
+                robot.drive.turn(45);
                 robot.drive.vertical(10);
-                robot.drive.turn(angleToCrater);
-                robot.drive.turn(10);
+                robot.drive.turn(-135);
+                robot.drive.vertical(10);
+                robot.drive.turn(135);
+                robot.drive.vertical(10);
+                deployMarker();
+                // Park in Crater, While Moving Gold
+                robot.drive.turn(90);
+                robot.drive.vertical(10);
+                robot.drive.turn(45);
+                if(glyphPosition == LEFT){
+                    robot.drive.vertical(5);
+                } else if (glyphPosition == CENTER){
+                    robot.drive.vertical(4);
+                } else {
+                    robot.drive.vertical(3);
+                }
+                robot.drive.horizontal(5);
             } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.blue){
-                // Set Marker NOT IN LIMITED
-                int angleToMineral;
-                int angleToCrater;
-                // Park in Crater, While Moving Gold
-                if(glyphPosition == LEFT){
-                    angleToMineral = -30;
-                    angleToCrater = 30;
-                } else if (glyphPosition == CENTER){
-                    angleToMineral = 0;
-                    angleToCrater = 0;
-                } else if (glyphPosition == RIGHT) {
-                    angleToMineral = 30;
-                    angleToCrater = -15;
-                } else {
-                    angleToMineral = 0;
-                    angleToCrater = 0;
-                }
-                robot.drive.turn(angleToMineral);
+                // Set Marker
+                robot.drive.turn(45);
                 robot.drive.vertical(10);
-                robot.drive.turn(angleToCrater);
-                robot.drive.turn(10);
+                robot.drive.turn(-135);
+                robot.drive.vertical(10);
+                robot.drive.turn(135);
+                robot.drive.vertical(10);
+                deployMarker();
+                // Park in Crater, While Moving Gold
+                robot.drive.turn(90);
+                robot.drive.vertical(10);
+                robot.drive.turn(45);
+                if(glyphPosition == LEFT){
+                    robot.drive.vertical(5);
+                } else if (glyphPosition == CENTER){
+                    robot.drive.vertical(4);
+                } else {
+                    robot.drive.vertical(3);
+                }
+                robot.drive.horizontal(5);
             }
         }
     }
 
     public void deployMarker() throws InterruptedException{
-        robot.markerServo.setPosition(.90f);
+        //robot.markerServo.setPosition(.90f);
         wait1(1000);
-        robot.markerServo.setPosition(.20f);
+        //robot.markerServo.setPosition(.20f);
         wait1(1000);
     }
 

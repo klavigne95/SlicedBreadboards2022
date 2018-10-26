@@ -1,14 +1,11 @@
-package org.firstinspires.ftc.teamcode.teamcode2018;
+package org.firstinspires.ftc.teamcode.teamcode2017;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
 import org.firstinspires.ftc.teamcode.game.robot.TeamColor;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by 20smcnamara on 10/19/18.
@@ -24,7 +21,7 @@ public class yeet extends LinearOpMode {
         robot.setTelemetry(telemetry);
         robot.setTime(runtime);
 
-        inputGameConfig();
+        //inputGameConfig();
         robot.drive.vertical(10);
     }
 

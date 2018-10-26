@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.teamcode2018;
+package org.firstinspires.ftc.teamcode.teamcode2017;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -33,10 +33,10 @@ public class Robot2017 {
     public DcMotor frMotor;
     public DcMotor blMotor;
     public DcMotor brMotor;
-    public Servo markerServo;
+    //public Servo markerServo;
     //public Servo gripl;
     //public Servo gripr;
-    public DcMotor lift;
+    //public DcMotor lift;
     //public DcMotor armmotor;
     //public Servo jewelservo;
     //public ColorSensor cs;
@@ -87,8 +87,8 @@ public class Robot2017 {
         frMotor = hwMap.dcMotor.get("frmotor");
         blMotor = hwMap.dcMotor.get("blmotor");
         brMotor = hwMap.dcMotor.get("brmotor");
-        lift = hwMap.dcMotor.get("liftmotor");
-        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //lift = hwMap.dcMotor.get("liftmotor");
+        //lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //armmotor = hwMap.dcMotor.get("armmotor");
         //jewelservo = hwMap.servo.get("jewelservo");
         //gripl = hwMap.servo.get("gripl");
@@ -171,7 +171,8 @@ public class Robot2017 {
             wait1(2000);
         }
 
-        public void turn(int degree) throws InterruptedException { //Hehe
+        public void
+        turn(int degree) throws InterruptedException { //Hehe
             PathSeg turn = new PathSeg(2 * TURN_LENGTH * degree / 90, -2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, -2 * TURN_LENGTH * degree / 90, time);
             startPath(turn);
             wait1(Math.abs(degree * 10));

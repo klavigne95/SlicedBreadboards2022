@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.teamcode2018;
+package org.firstinspires.ftc.teamcode.teamcode2017;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -37,6 +36,7 @@ public class Auto extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             // Get Down
+            /*
             robot.lift.setPower(.5);
             wait1(500);
             robot.lift.setPower(0);
@@ -44,12 +44,13 @@ public class Auto extends LinearOpMode {
             robot.lift.setPower(-.5);
             wait1(500);
             robot.lift.setPower(0);
+            */
             // SCAN GLYPHS
             SamplingOrderDetector.GoldLocation glyphPosition;
             if(detector.isFound()){
                 glyphPosition = detector.getCurrentOrder();
             } else {
-                // MOVE ROBOT TO FIND IT!!! WRITE LATER
+                // TODO: Move robot to find glyphs
                 glyphPosition =  CENTER;
             }
             // If Pointed at Square ->
@@ -162,9 +163,9 @@ public class Auto extends LinearOpMode {
     }
 
     public void deployMarker() throws InterruptedException{
-        robot.markerServo.setPosition(.90f);
+        //robot.markerServo.setPosition(.90f);
         wait1(1000);
-        robot.markerServo.setPosition(.20f);
+        //robot.markerServo.setPosition(.20f);
         wait1(1000);
     }
 
