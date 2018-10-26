@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.teamcode2017;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -117,8 +118,8 @@ public class Robot2017 {
                 (WHEEL_DIAMETER_INCHES * Math.PI);
         static final double ROBOT_WIDTH = 17.0;
         static final double TURN_LENGTH = ROBOT_WIDTH * Math.PI / 4;
-        DcMotor.Direction leftDefaultDir = DcMotor.Direction.REVERSE; //Hehe
-        DcMotor.Direction rightDefaultDir = DcMotor.Direction.FORWARD; //Hehe
+        DcMotor.Direction leftDefaultDir = DcMotor.Direction.FORWARD; //Hehe
+        DcMotor.Direction rightDefaultDir = DcMotor.Direction.REVERSE; //Hehe
 
 
         Queue<PathSeg> paths = new LinkedBlockingQueue();
