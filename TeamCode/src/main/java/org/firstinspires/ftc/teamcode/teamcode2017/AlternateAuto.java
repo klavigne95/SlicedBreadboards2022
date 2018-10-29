@@ -58,109 +58,127 @@ public class AlternateAuto extends LinearOpMode {
                 int angleToMineral;
                 int angleToMarker;
                 int angleToCrater;
+                int distToMineral;
+                int distToMarker;
                 if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
                     angleToCrater = 107;
+                    distToMineral = 17;
+                    distToMarker = 18;
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
                     angleToCrater = 135;
+                    distToMineral = 14;
+                    distToMarker = 15;
                 } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
                     angleToCrater = 158;
+                    distToMineral = 17;
+                    distToMarker = 18;
                 } else {
                     angleToMineral = 0;
                     angleToMarker = 0;
                     angleToCrater = 135;
+                    distToMineral = 14;
+                    distToMarker = 15;
                 }
                 robot.drive.turn(angleToMineral);
-                robot.drive.vertical(10);
+                robot.drive.vertical(distToMineral);
                 robot.drive.turn(angleToMarker);
-                robot.drive.vertical(10);
+                robot.drive.vertical(distToMarker);
                 // Set Marker
-                robot.drive.vertical(10);
                 deployMarker();
                 // Park in Crater
                 robot.drive.turn(angleToCrater);
-                robot.drive.vertical(10); // CAN USE HORIZONTAL?
+                robot.drive.vertical(57); // 24*3.5/1.574803 Moving Across 3.5ish tiles
             } else if (robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.blue){
                 // Move Gold
                 int angleToMineral;
                 int angleToMarker;
                 int angleToCrater;
+                int distToMineral;
+                int distToMarker;
                 if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
                     angleToCrater = 107;
+                    distToMineral = 17;
+                    distToMarker = 18;
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
                     angleToCrater = 135;
+                    distToMineral = 14;
+                    distToMarker = 15;
                 } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
                     angleToCrater = 158;
+                    distToMineral = 17;
+                    distToMarker = 18;
                 } else {
                     angleToMineral = 0;
                     angleToMarker = 0;
                     angleToCrater = 135;
+                    distToMineral = 14;
+                    distToMarker = 15;
                 }
                 robot.drive.turn(angleToMineral);
-                robot.drive.vertical(10);
+                robot.drive.vertical(distToMineral);
                 robot.drive.turn(angleToMarker);
-                robot.drive.vertical(10);
+                robot.drive.vertical(distToMarker);
                 // Set Marker
-                robot.drive.vertical(10);
                 deployMarker();
                 // Park in Crater
                 robot.drive.turn(angleToCrater);
-                robot.drive.vertical(10); // CAN USE HORIZONTAL?
+                robot.drive.vertical(57); // 24*3.5/1.574803 Moving Across 3.5ish tiles
 
                 // If Pointed at Crater
             } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.red){
                 // Set Marker
                 robot.drive.turn(45);
-                robot.drive.vertical(10);
+                robot.drive.vertical(23);
                 robot.drive.turn(-135);
-                robot.drive.vertical(10);
+                robot.drive.vertical(46);
                 robot.drive.turn(135);
-                robot.drive.vertical(10);
+                robot.drive.vertical(45);
                 deployMarker();
                 // Park in Crater, While Moving Gold
                 robot.drive.turn(90);
-                robot.drive.vertical(10);
+                robot.drive.vertical(30);
                 robot.drive.turn(45);
                 if(glyphPosition == LEFT){
-                    robot.drive.vertical(5);
+                    robot.drive.vertical(20);
                 } else if (glyphPosition == CENTER){
-                    robot.drive.vertical(4);
+                    robot.drive.vertical(29);
                 } else {
-                    robot.drive.vertical(3);
+                    robot.drive.vertical(38);
                 }
-                robot.drive.horizontal(5);
+                robot.drive.horizontal(20);
             } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.blue){
                 // Set Marker
                 robot.drive.turn(45);
-                robot.drive.vertical(10);
+                robot.drive.vertical(23);
                 robot.drive.turn(-135);
-                robot.drive.vertical(10);
+                robot.drive.vertical(46);
                 robot.drive.turn(135);
-                robot.drive.vertical(10);
+                robot.drive.vertical(45);
                 deployMarker();
                 // Park in Crater, While Moving Gold
                 robot.drive.turn(90);
-                robot.drive.vertical(10);
+                robot.drive.vertical(30);
                 robot.drive.turn(45);
                 if(glyphPosition == LEFT){
-                    robot.drive.vertical(5);
+                    robot.drive.vertical(20);
                 } else if (glyphPosition == CENTER){
-                    robot.drive.vertical(4);
+                    robot.drive.vertical(29);
                 } else {
-                    robot.drive.vertical(3);
+                    robot.drive.vertical(38);
                 }
-                robot.drive.horizontal(5);
+                robot.drive.horizontal(20);
             }
         }
     }
