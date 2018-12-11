@@ -35,12 +35,7 @@ public class Robot2017 {
     public DcMotor blMotor;
     public DcMotor brMotor;
     //public Servo markerServo;
-    //public Servo gripl;
-    //public Servo gripr;
-    //public DcMotor lift;
-    //public DcMotor armmotor;
-    //public Servo jewelservo;
-    //public ColorSensor cs;
+    //public DcMotor liftMotor;
     public DriveTrain drive;
     private HardwareMap hwMap;
     private Telemetry telemetry;
