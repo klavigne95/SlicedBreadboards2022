@@ -28,14 +28,16 @@ public class Robot2017 {
     //final float griprin = .90f;
     //final float griplout = .42f;
     //final float griprout = .48f;
+    public float markerUp = .20f;
+    public float markerDown = .90f;
     public TeamColor teamColor;
     public StartPosition startPosition;
     public DcMotor flMotor;
     public DcMotor frMotor;
     public DcMotor blMotor;
     public DcMotor brMotor;
-    //public Servo markerServo;
-    //public DcMotor liftMotor;
+    public Servo markerServo;
+    public DcMotor liftMotor;
     public DriveTrain drive;
     private HardwareMap hwMap;
     private Telemetry telemetry;
@@ -57,17 +59,15 @@ public class Robot2017 {
     public void setTime(ElapsedTime time) {
         this.time = time;
     }
-/*
-    public void ungrip() {
-        gripl.setPosition(griplout);
-        gripr.setPosition(griprout);
+
+    public void holderUp() {
+        markerServo.setPosition(markerUp);
     }
 
-    public void grip() {
-        gripl.setPosition(griplin);
-        gripr.setPosition(griprin);
+    public void holderDown() {
+        markerServo.setPosition(markerDown);
     }
-*/
+
 
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap hwMap) {
@@ -83,7 +83,7 @@ public class Robot2017 {
         frMotor = hwMap.dcMotor.get("frmotor");
         blMotor = hwMap.dcMotor.get("blmotor");
         brMotor = hwMap.dcMotor.get("brmotor");
-        //lift = hwMap.dcMotor.get("liftmotor");
+        liftMotor = hwMap.dcMotor.get("liftMotor");
         //lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //armmotor = hwMap.dcMotor.get("armmotor");
         //jewelservo = hwMap.servo.get("jewelservo");

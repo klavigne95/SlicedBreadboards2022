@@ -58,6 +58,7 @@ public class singleJoystick extends LinearOpMode {
                 rightPow = -rightPow;
             }
 
+
             /*
             if (gamepad1.a) {
                 armPow = .5;

@@ -25,7 +25,7 @@ public class driverControlled extends LinearOpMode {
         double leftPow = 0;
         double rightPow = 0;
         //double armPow = 0;
-        //double liftPow = 0;
+        double liftPow = 0;
         double[] targets = {0, 0};
         double[] powers = {0, 0};
         //motor power is from -1.0 to 1.0;
@@ -41,25 +41,38 @@ public class driverControlled extends LinearOpMode {
             leftPow = (double) gamepad1.left_stick_y / 3 * 2;
             telemetry.addData("left", "Running to %7d :%7d", robot.flMotor.getCurrentPosition(), robot.blMotor.getCurrentPosition());
             telemetry.addData("right", "Running to %7d :%7d", robot.frMotor.getCurrentPosition(), robot.brMotor.getCurrentPosition());
-            /*
-            //arm
+
+            //lift
+            if (gamepad1.dpad_up) {
+                liftPow = .4;
+            } else if (gamepad1.dpad_down) {
+                liftPow = -.2;
+            } else {
+                liftPow = 0;
+            }
+
             if (gamepad2.a) {
+                robot.holderDown();
+            } else if (gamepad2.y) {
+                robot.holderUp();
+            }
+            /*
+            if (gamepad1.a) {
                 armPow = .5;
 
-            } else if (gamepad2.b) {
+            } else if (gamepad1.b) {
                 //out
                 armPow = -.5;
 
             } else {
-                //armPow = 0;
+                armPow = 0;
             }
-
 
             //grip
             if (gamepad2.x) {
-                robot.ungrip();
+                robot.holderDown();
             } else if (gamepad2.y) {
-                robot.grip();
+                robot.holderUp();
             }
 
 
@@ -101,7 +114,7 @@ public class driverControlled extends LinearOpMode {
             robot.blMotor.setPower(leftPow);
             robot.brMotor.setPower(rightPow);
             //robot.armmotor.setPower(armPow);
-            //robot.lift1.setPower(liftPow);
+            robot.liftMotor.setPower(liftPow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }
