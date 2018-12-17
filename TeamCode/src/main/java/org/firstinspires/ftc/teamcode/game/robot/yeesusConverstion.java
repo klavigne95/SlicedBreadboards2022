@@ -5,7 +5,7 @@ package org.firstinspires.ftc.teamcode.game.robot;
  */
 
 public class yeesusConverstion {
-    public static final double inchesInAYeet = 1.57;
+    public static final double inchesInAYeet = 0.825; // Maybe
     public static final double tileSize = 23;
 
     public static double tileToYeet(double input) { return input * tileSize / inchesInAYeet; }
