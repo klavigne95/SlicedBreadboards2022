@@ -160,7 +160,7 @@ public class LimitedAuto extends LinearOpMode {
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
                 robot.drive.turn(angleToCrater);
-                robot.drive.turn(distToCrater);
+                robot.drive.vertical(distToCrater);
             } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.blue){
                 // Set Marker NOT IN LIMITED
                 int angleToMineral;
@@ -192,7 +192,7 @@ public class LimitedAuto extends LinearOpMode {
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
                 robot.drive.turn(angleToCrater);
-                robot.drive.turn(distToCrater);
+                robot.drive.vertical(distToCrater);
             }
         }
     }
