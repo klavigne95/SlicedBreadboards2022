@@ -66,7 +66,7 @@ public class Auto extends LinearOpMode {
                     angleToMineral = -30;
                     angleToMarker = 52;
                     angleToCrater = 107;
-                    distToMineral = 17;
+                    distToMineral = 27;
                     distToMarker = 18;
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
@@ -78,7 +78,7 @@ public class Auto extends LinearOpMode {
                     angleToMineral = 30;
                     angleToMarker = -52;
                     angleToCrater = 158;
-                    distToMineral = 17;
+                    distToMineral = 27;
                     distToMarker = 18;
                 } else {
                     angleToMineral = 0;
@@ -107,7 +107,7 @@ public class Auto extends LinearOpMode {
                     angleToMineral = -30;
                     angleToMarker = 52;
                     angleToCrater = 107;
-                    distToMineral = 17;
+                    distToMineral = 27;
                     distToMarker = 18;
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
@@ -119,7 +119,7 @@ public class Auto extends LinearOpMode {
                     angleToMineral = 30;
                     angleToMarker = -52;
                     angleToCrater = 158;
-                    distToMineral = 17;
+                    distToMineral = 27;
                     distToMarker = 18;
                 } else {
                     angleToMineral = 0;

@@ -6,9 +6,9 @@ package org.firstinspires.ftc.teamcode.game.robot;
 
 public class yeesusConverstion {
     public static final double inchesInAYeet = 0.825; // Maybe
-    public static final double tileSize = 23;
+    public static final double tileSize = 23.0;
 
-    public static double tileToYeet(double input) { return input * tileSize / inchesInAYeet; }
+    public static int tileToYeet(double input) { return (int)(input * tileSize / inchesInAYeet); }
 
-    public static double inchesToYeet(double input) { return input / inchesInAYeet; }
+    public static int inchesToYeet(double input) { return (int)(input / inchesInAYeet); }
 }

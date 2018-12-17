@@ -12,6 +12,8 @@ import org.firstinspires.ftc.teamcode.game.robot.TeamColor;
 
 import java.util.concurrent.TimeUnit;
 
+import org.firstinspires.ftc.teamcode.game.robot.yeesusConverstion;
+
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.CENTER;
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.LEFT;
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.RIGHT;
@@ -64,8 +66,8 @@ public class LimitedAuto extends LinearOpMode {
                 if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
-                    distToMineral = 17;
-                    distToMarker = 18;
+                    distToMineral = yeesusConverstion.tileToYeet(27.0);
+                    distToMarker = yeesusConverstion.tileToYeet(28.0);
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
@@ -74,8 +76,8 @@ public class LimitedAuto extends LinearOpMode {
                 } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
-                    distToMineral = 17;
-                    distToMarker = 18;
+                    distToMineral = 27;
+                    distToMarker = 28;
                 } else {
                     angleToMineral = 0;
                     angleToMarker = 0;
@@ -100,8 +102,8 @@ public class LimitedAuto extends LinearOpMode {
                 if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
-                    distToMineral = 17;
-                    distToMarker = 18;
+                    distToMineral = 27;
+                    distToMarker = 28;
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
@@ -110,8 +112,8 @@ public class LimitedAuto extends LinearOpMode {
                 } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
-                    distToMineral = 17;
-                    distToMarker = 18;
+                    distToMineral = 27;
+                    distToMarker = 28;
                 } else {
                     angleToMineral = 0;
                     angleToMarker = 0;
@@ -123,7 +125,7 @@ public class LimitedAuto extends LinearOpMode {
                 robot.drive.turn(angleToMarker);
                 robot.drive.vertical(distToMarker);
                 // Set Marker
-                robot.drive.vertical(18);
+                robot.drive.vertical(28);
                 deployMarker();
                 // Park in Crater
                 //NOT IN LIMITED
@@ -137,7 +139,7 @@ public class LimitedAuto extends LinearOpMode {
                 if(glyphPosition == LEFT){
                     angleToMineral = -30;
                     angleToCrater = 30;
-                    distToMineral = 17;
+                    distToMineral = 27;
                     distToCrater = 8;
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
@@ -147,7 +149,7 @@ public class LimitedAuto extends LinearOpMode {
                 } else if (glyphPosition == RIGHT) {
                     angleToMineral = 30;
                     angleToCrater = -15;
-                    distToMineral = 17;
+                    distToMineral = 27;
                     distToCrater = 8;
                 } else {
                     angleToMineral = 0;
@@ -169,7 +171,7 @@ public class LimitedAuto extends LinearOpMode {
                 if(glyphPosition == LEFT){
                     angleToMineral = -30;
                     angleToCrater = 30;
-                    distToMineral = 17;
+                    distToMineral = 27;
                     distToCrater = 8;
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
@@ -179,7 +181,7 @@ public class LimitedAuto extends LinearOpMode {
                 } else if (glyphPosition == RIGHT) {
                     angleToMineral = 30;
                     angleToCrater = -15;
-                    distToMineral = 17;
+                    distToMineral = 27;
                     distToCrater = 8;
                 } else {
                     angleToMineral = 0;
