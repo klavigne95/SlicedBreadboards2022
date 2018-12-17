@@ -148,35 +148,35 @@ public class Robot2017 {
         }
 
         public void horizontal(double length) throws InterruptedException { //Hehe
-            PathSeg right = new PathSeg(length, -length, -length, length, time);
+            PathSeg right = new PathSeg(-length, length, length, -length, time);
             startPath(right);
             wait1((int) length / 12 * 500);
             wait1(1000);
         }
 
         public void turnRight() throws InterruptedException { //Hehe
-            PathSeg left = new PathSeg(2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, time);
+            PathSeg left = new PathSeg(-2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, time);
             startPath(left);
             wait1(2000);
 
         }
 
         public void turnLeft() throws InterruptedException { //Hehe
-            PathSeg right = new PathSeg(-2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, time);
+            PathSeg right = new PathSeg(2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, time);
             startPath(right);
             wait1(2000);
         }
 
         public void
         turn(int degree) throws InterruptedException { //Hehe
-            PathSeg turn = new PathSeg(2 * TURN_LENGTH * degree / 90, -2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, -2 * TURN_LENGTH * degree / 90, time);
+            PathSeg turn = new PathSeg(-2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, -2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, time);
             startPath(turn);
             wait1(Math.abs(degree * 10));
             wait1(1000);
         }
 
         public void vertical(double length) throws InterruptedException {
-            PathSeg path = new PathSeg(length, length, length, length, time); //Hehe
+            PathSeg path = new PathSeg(-length, -length, -length, -length, time); //Hehe
             startPath(path);
             wait1((int) length / 12 * 500);
             wait1(1000);
