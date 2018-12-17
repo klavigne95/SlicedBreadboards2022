@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.game.robot.TeamColor;
 
 import java.util.concurrent.TimeUnit;
 
-import org.firstinspires.ftc.teamcode.game.robot.yeesusConverstion;
+import org.firstinspires.ftc.teamcode.game.robot.Convert;
 
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.CENTER;
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.LEFT;
@@ -66,23 +66,23 @@ public class LimitedAuto extends LinearOpMode {
                 if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
-                    distToMineral = yeesusConverstion.tileToYeet(1.155);
-                    distToMarker = yeesusConverstion.tileToYeet(1.118);
+                    distToMineral = Convert.tileToYeet(1.155);
+                    distToMarker = Convert.tileToYeet(1.118);
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
-                    distToMineral = yeesusConverstion.tileToYeet(1);
-                    distToMarker = yeesusConverstion.tileToYeet(1);
+                    distToMineral = Convert.tileToYeet(1);
+                    distToMarker = Convert.tileToYeet(1);
                 } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
-                    distToMineral = yeesusConverstion.tileToYeet(1.155);
-                    distToMarker = yeesusConverstion.tileToYeet(1.118);
+                    distToMineral = Convert.tileToYeet(1.155);
+                    distToMarker = Convert.tileToYeet(1.118);
                 } else {
                     angleToMineral = 0;
                     angleToMarker = 0;
-                    distToMineral = yeesusConverstion.tileToYeet(1);
-                    distToMarker = yeesusConverstion.tileToYeet(1);
+                    distToMineral = Convert.tileToYeet(1);
+                    distToMarker = Convert.tileToYeet(1);
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
@@ -99,23 +99,23 @@ public class LimitedAuto extends LinearOpMode {
                 if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
-                    distToMineral = yeesusConverstion.tileToYeet(1.155);
-                    distToMarker = yeesusConverstion.tileToYeet(1.118);
+                    distToMineral = Convert.tileToYeet(1.155);
+                    distToMarker = Convert.tileToYeet(1.118);
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
-                    distToMineral = yeesusConverstion.tileToYeet(1);
-                    distToMarker = yeesusConverstion.tileToYeet(1);
+                    distToMineral = Convert.tileToYeet(1);
+                    distToMarker = Convert.tileToYeet(1);
                 } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
-                    distToMineral = yeesusConverstion.tileToYeet(1.155);
-                    distToMarker = yeesusConverstion.tileToYeet(1.118);
+                    distToMineral = Convert.tileToYeet(1.155);
+                    distToMarker = Convert.tileToYeet(1.118);
                 } else {
                     angleToMineral = 0;
                     angleToMarker = 0;
-                    distToMineral = yeesusConverstion.tileToYeet(1);
-                    distToMarker = yeesusConverstion.tileToYeet(1);
+                    distToMineral = Convert.tileToYeet(1);
+                    distToMarker = Convert.tileToYeet(1);
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
@@ -134,23 +134,23 @@ public class LimitedAuto extends LinearOpMode {
                 if(glyphPosition == LEFT){
                     angleToMineral = -30;
                     angleToCrater = 30;
-                    distToMineral = yeesusConverstion.tileToYeet(1.155);
-                    distToCrater = yeesusConverstion.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(1.155);
+                    distToCrater = Convert.tileToYeet(2);
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToCrater = 0;
-                    distToMineral = yeesusConverstion.tileToYeet(1);
-                    distToCrater = yeesusConverstion.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(1);
+                    distToCrater = Convert.tileToYeet(2);
                 } else if (glyphPosition == RIGHT) {
                     angleToMineral = 30;
                     angleToCrater = -15;
-                    distToMineral = yeesusConverstion.tileToYeet(1.155);
-                    distToCrater = yeesusConverstion.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(1.155);
+                    distToCrater = Convert.tileToYeet(2);
                 } else {
                     angleToMineral = 0;
                     angleToCrater = 0;
-                    distToMineral = yeesusConverstion.tileToYeet(1);
-                    distToCrater = yeesusConverstion.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(1);
+                    distToCrater = Convert.tileToYeet(2);
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
@@ -166,23 +166,23 @@ public class LimitedAuto extends LinearOpMode {
                 if(glyphPosition == LEFT){
                     angleToMineral = -30;
                     angleToCrater = 30;
-                    distToMineral = yeesusConverstion.tileToYeet(1.155);
-                    distToCrater = yeesusConverstion.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(1.155);
+                    distToCrater = Convert.tileToYeet(2);
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToCrater = 0;
-                    distToMineral = yeesusConverstion.tileToYeet(1);
-                    distToCrater = yeesusConverstion.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(1);
+                    distToCrater = Convert.tileToYeet(2);
                 } else if (glyphPosition == RIGHT) {
                     angleToMineral = 30;
                     angleToCrater = -15;
-                    distToMineral = yeesusConverstion.tileToYeet(1.155);
-                    distToCrater = yeesusConverstion.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(1.155);
+                    distToCrater = Convert.tileToYeet(2);
                 } else {
                     angleToMineral = 0;
                     angleToCrater = 0;
-                    distToMineral = yeesusConverstion.tileToYeet(1);
-                    distToCrater = yeesusConverstion.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(1);
+                    distToCrater = Convert.tileToYeet(2);
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
