@@ -66,33 +66,30 @@ public class LimitedAuto extends LinearOpMode {
                 if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
-                    distToMineral = yeesusConverstion.tileToYeet(27.0);
-                    distToMarker = yeesusConverstion.tileToYeet(28.0);
+                    distToMineral = yeesusConverstion.tileToYeet(1.155);
+                    distToMarker = yeesusConverstion.tileToYeet(1.118);
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
-                    distToMineral = 14;
-                    distToMarker = 15;
+                    distToMineral = yeesusConverstion.tileToYeet(1);
+                    distToMarker = yeesusConverstion.tileToYeet(1);
                 } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
-                    distToMineral = 27;
-                    distToMarker = 28;
+                    distToMineral = yeesusConverstion.tileToYeet(1.155);
+                    distToMarker = yeesusConverstion.tileToYeet(1.118);
                 } else {
                     angleToMineral = 0;
                     angleToMarker = 0;
-                    distToMineral = 0;
-                    distToMarker = 0;
+                    distToMineral = yeesusConverstion.tileToYeet(1);
+                    distToMarker = yeesusConverstion.tileToYeet(1);
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
                 robot.drive.turn(angleToMarker);
                 robot.drive.vertical(distToMarker);
                 // Set Marker
-                robot.drive.vertical(10);
                 deployMarker();
-                // Park in Crater
-                //NOT IN LIMITED
             } else if (robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.blue){
                 // Move Gold
                 int angleToMineral;
@@ -102,34 +99,32 @@ public class LimitedAuto extends LinearOpMode {
                 if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
-                    distToMineral = 27;
-                    distToMarker = 28;
+                    distToMineral = yeesusConverstion.tileToYeet(1.155);
+                    distToMarker = yeesusConverstion.tileToYeet(1.118);
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
-                    distToMineral = 14;
-                    distToMarker = 15;
+                    distToMineral = yeesusConverstion.tileToYeet(1);
+                    distToMarker = yeesusConverstion.tileToYeet(1);
                 } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
-                    distToMineral = 27;
-                    distToMarker = 28;
+                    distToMineral = yeesusConverstion.tileToYeet(1.155);
+                    distToMarker = yeesusConverstion.tileToYeet(1.118);
                 } else {
                     angleToMineral = 0;
                     angleToMarker = 0;
-                    distToMineral = 0;
-                    distToMarker = 0;
+                    distToMineral = yeesusConverstion.tileToYeet(1);
+                    distToMarker = yeesusConverstion.tileToYeet(1);
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
                 robot.drive.turn(angleToMarker);
                 robot.drive.vertical(distToMarker);
                 // Set Marker
-                robot.drive.vertical(28);
                 deployMarker();
-                // Park in Crater
-                //NOT IN LIMITED
-            } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.red){
+                // If Pointed at Crater
+            }  else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.red){
                 // Set Marker NOT IN LIMITED
                 int angleToMineral;
                 int angleToCrater;
@@ -139,23 +134,23 @@ public class LimitedAuto extends LinearOpMode {
                 if(glyphPosition == LEFT){
                     angleToMineral = -30;
                     angleToCrater = 30;
-                    distToMineral = 27;
-                    distToCrater = 8;
+                    distToMineral = yeesusConverstion.tileToYeet(1.155);
+                    distToCrater = yeesusConverstion.tileToYeet(2);
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToCrater = 0;
-                    distToMineral = 14;
-                    distToCrater = 5;
+                    distToMineral = yeesusConverstion.tileToYeet(1);
+                    distToCrater = yeesusConverstion.tileToYeet(2);
                 } else if (glyphPosition == RIGHT) {
                     angleToMineral = 30;
                     angleToCrater = -15;
-                    distToMineral = 27;
-                    distToCrater = 8;
+                    distToMineral = yeesusConverstion.tileToYeet(1.155);
+                    distToCrater = yeesusConverstion.tileToYeet(2);
                 } else {
                     angleToMineral = 0;
                     angleToCrater = 0;
-                    distToMineral = 0;
-                    distToCrater = 0;
+                    distToMineral = yeesusConverstion.tileToYeet(1);
+                    distToCrater = yeesusConverstion.tileToYeet(2);
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
@@ -171,23 +166,23 @@ public class LimitedAuto extends LinearOpMode {
                 if(glyphPosition == LEFT){
                     angleToMineral = -30;
                     angleToCrater = 30;
-                    distToMineral = 27;
-                    distToCrater = 8;
+                    distToMineral = yeesusConverstion.tileToYeet(1.155);
+                    distToCrater = yeesusConverstion.tileToYeet(2);
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToCrater = 0;
-                    distToMineral = 5;
-                    distToCrater = 15;
+                    distToMineral = yeesusConverstion.tileToYeet(1);
+                    distToCrater = yeesusConverstion.tileToYeet(2);
                 } else if (glyphPosition == RIGHT) {
                     angleToMineral = 30;
                     angleToCrater = -15;
-                    distToMineral = 27;
-                    distToCrater = 8;
+                    distToMineral = yeesusConverstion.tileToYeet(1.155);
+                    distToCrater = yeesusConverstion.tileToYeet(2);
                 } else {
                     angleToMineral = 0;
                     angleToCrater = 0;
-                    distToMineral = 0;
-                    distToCrater = 0;
+                    distToMineral = yeesusConverstion.tileToYeet(1);
+                    distToCrater = yeesusConverstion.tileToYeet(2);
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
