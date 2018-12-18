@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.game.robot;
 
 /**
- * Created by 20smcnamara on 12/17/18.
+ * Created by urmom on 12/17/18.
  */
 
-public class yeesusConverstion {
+public class Convert {
     public static final double inchesInAYeet = 0.825; // Maybe
     public static final double tileSize = 23.0;
 
