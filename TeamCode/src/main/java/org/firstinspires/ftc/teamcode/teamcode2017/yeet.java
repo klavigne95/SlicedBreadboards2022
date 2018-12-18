@@ -25,7 +25,7 @@ public class yeet extends LinearOpMode {
         robot.drive.vertical(10);
     }
 
-    private void inputGameConfig() throws InterruptedException {
+    private void inputGameConfig() {
         telemetry.addData("Input team color", "Red (press b) or Blue (press x)");
         telemetry.update();
         while (!gamepad1.b && !gamepad1.x) {

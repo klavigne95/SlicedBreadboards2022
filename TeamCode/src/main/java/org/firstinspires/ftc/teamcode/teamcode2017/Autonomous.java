@@ -20,7 +20,7 @@ import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.
 
 @TeleOp(name = "Autonomous", group = "Auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class Auto extends LinearOpMode {
+public class Autonomous extends LinearOpMode {
     // 40 cm = 15.74803 in = 10
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
@@ -190,7 +190,7 @@ public class Auto extends LinearOpMode {
         wait1(1000);
     }
 
-    private void inputGameConfig() throws InterruptedException {
+    private void inputGameConfig() {
         telemetry.addData("Input team color", "Red (press b) or Blue (press x)");
         telemetry.update();
         while (!gamepad1.b && !gamepad1.x) {

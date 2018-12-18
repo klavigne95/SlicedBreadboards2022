@@ -192,7 +192,7 @@ public class AlternateAuto extends LinearOpMode {
         wait1(1000);
     }
 
-    private void inputGameConfig() throws InterruptedException {
+    private void inputGameConfig() {
         telemetry.addData("Input team color", "Red (press b) or Blue (press x)");
         telemetry.update();
         while (!gamepad1.b && !gamepad1.x) {

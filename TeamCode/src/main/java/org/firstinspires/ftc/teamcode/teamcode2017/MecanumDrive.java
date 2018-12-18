@@ -13,7 +13,7 @@ public class MecanumDrive extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
         Robot2017 robot = new Robot2017();
