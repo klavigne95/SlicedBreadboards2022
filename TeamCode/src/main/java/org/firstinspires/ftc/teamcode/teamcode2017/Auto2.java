@@ -18,9 +18,9 @@ import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.LEFT;
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.RIGHT;
 
-@TeleOp(name = "Autonomous", group = "Auto")
+@TeleOp(name = "Auto2", group = "Auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class Autonomous extends LinearOpMode {
+public class Auto2 extends LinearOpMode {
     // 40 cm = 15.74803 in = 10
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
