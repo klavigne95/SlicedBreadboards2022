@@ -23,7 +23,7 @@ public class MecanumDrive extends LinearOpMode {
         waitForStart();
         runtime.reset();
         //double armPow = 0;
-        //double liftPow = 0;
+        double liftPow = 0;
         double[] targets = {0, 0, 0, 0};
         double[] powers = {0, 0, 0, 0};
         //motor power is from -1.0 to 1.0;
@@ -46,6 +46,26 @@ public class MecanumDrive extends LinearOpMode {
             //float to double, get power from controller
             telemetry.addData("left", "Running to %7d :%7d", robot.flMotor.getCurrentPosition(), robot.blMotor.getCurrentPosition());
             telemetry.addData("right", "Running to %7d :%7d", robot.frMotor.getCurrentPosition(), robot.brMotor.getCurrentPosition());
+
+            if (gamepad2.dpad_down) {
+                liftPow = -.2;
+            } else if (gamepad2.dpad_up) {
+                liftPow = .4;
+            } else {
+                liftPow = 0;
+            }
+
+            if (gamepad2.right_trigger > .5 && robot.markerServo.getPosition() < 1.489) {
+                robot.markerServo.setPosition(robot.markerServo.getPosition() + .01);
+            } else if (gamepad2.right_bumper && robot.markerServo.getPosition() > -.489) {
+                robot.markerServo.setPosition(robot.markerServo.getPosition() - .01);
+            }
+
+            if (gamepad2.left_trigger > .5 && robot.pulleyHolder.getPosition() < 1.489) {
+                robot.pulleyHolder.setPosition(robot.pulleyHolder.getPosition() + .01);
+            } else if (gamepad2.left_bumper && robot.pulleyHolder.getPosition() > -.489) {
+                robot.pulleyHolder.setPosition(robot.pulleyHolder.getPosition() - .01);
+            }
 
             /*
             //arm
@@ -98,6 +118,7 @@ public class MecanumDrive extends LinearOpMode {
             //telemetry.addData("gripr", robot.gripr.getPosition());
             //telemetry.addData("red", robot.cs.red());
             //telemetry.addData("blue", robot.cs.blue());
+            telemetry.addData("Marker Servo Position: ", robot.markerServo.getPosition());
             telemetry.update();
 
             robot.flMotor.setPower(v1);
@@ -105,7 +126,7 @@ public class MecanumDrive extends LinearOpMode {
             robot.blMotor.setPower(v3);
             robot.brMotor.setPower(v4);
             //robot.armmotor.setPower(armPow);
-            //robot.lift1.setPower(liftPow);
+            robot.liftMotor.setPower(liftPow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }

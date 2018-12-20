@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.teamcode2017;
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -180,6 +181,7 @@ public class Auto2 extends LinearOpMode {
                 }
                 robot.drive.horizontal(Convert.tileToYeet(2));
             }
+            idle();
         }
     }
 

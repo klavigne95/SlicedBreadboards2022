@@ -39,13 +39,13 @@ public class AlternateAuto extends LinearOpMode {
         while (opModeIsActive()) {
             // Get Down
             /*
-            robot.lift.setPower(.5);
+            robot.liftMotor.setPower(.5);
             wait1(500);
-            robot.lift.setPower(0);
+            robot.liftMotor.setPower(0);
             robot.drive.vertical(.1);
-            robot.lift.setPower(-.5);
+            robot.liftMotor.setPower(-.5);
             wait1(500);
-            robot.lift.setPower(0);
+            robot.liftMotor.setPower(0);
             */
             SamplingOrderDetector.GoldLocation glyphPosition;
             if(detector.isFound()){
@@ -182,6 +182,7 @@ public class AlternateAuto extends LinearOpMode {
                 }
                 robot.drive.horizontal(Convert.tileToYeet(2));
             }
+            idle();
         }
     }
 

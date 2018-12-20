@@ -39,13 +39,13 @@ public class LimitedAuto extends LinearOpMode {
         while (opModeIsActive()) {
             // Get Down
             /*
-            robot.lift.setPower(.5);
+            robot.liftMotor.setPower(.5);
             wait1(500);
-            robot.lift.setPower(0);
+            robot.liftMotor.setPower(0);
             robot.drive.vertical(.1);
-            robot.lift.setPower(-.5);
+            robot.liftMotor.setPower(-.5);
             wait1(500);
-            robot.lift.setPower(0);
+            robot.liftMotor.setPower(0);
             */
             //SCAN GLYPHS
             SamplingOrderDetector.GoldLocation glyphPosition;
@@ -189,6 +189,7 @@ public class LimitedAuto extends LinearOpMode {
                 robot.drive.turn(angleToCrater);
                 robot.drive.vertical(distToCrater);
             }
+            idle();
         }
     }
 
