@@ -41,28 +41,36 @@ public class Auto2 extends LinearOpMode {
         while (opModeIsActive()) {
             // Get Down
             /*
+            robot.pulleyHolder.setPosition(.779f);
             robot.liftMotor.setPower(.5);
+            robot.negLiftMotor.setPower(-.5);
             wait1(500);
             robot.liftMotor.setPower(0);
-            robot.drive.vertical(.1);
+            robot.negLiftMotor.setPower(0);
+            robot.drive.horizontal(1);
             robot.liftMotor.setPower(-.5);
+            robot.negLiftMotor.setPower(.5);
             wait1(500);
             robot.liftMotor.setPower(0);
+            robot.drive.vertical(-1);
+            robot.drive.turn(180);
             */
             // SCAN GLYPHS
             SamplingOrderDetector.GoldLocation glyphPosition;
             if(detector.isFound()){
                 if (detector.getXPosition() <= 160 || detector.getXPosition() > 0){
                     glyphPosition = LEFT;
+                    telemetry.addData("Glyph Position:", glyphPosition);
                 } else if (detector.getXPosition() > 160 || detector.getXPosition() <= 450){
                     glyphPosition = CENTER;
+                    telemetry.addData("Glyph Position:", glyphPosition);
                 } else if (detector.getXPosition() > 450 || detector.getXPosition() <= 640){
                     glyphPosition = RIGHT;
+                    telemetry.addData("Glyph Position:", glyphPosition);
                 } else {
                     glyphPosition = CENTER;
                     telemetry.addData("OUT OF BOUNDS, Default CENTER", glyphPosition);
                 }
-
             } else {
                 // TODO: Move robot to find glyphs
                 glyphPosition =  CENTER;
@@ -100,6 +108,7 @@ public class Auto2 extends LinearOpMode {
                     angleToCrater = 135;
                     distToMineral = Convert.tileToYeet(1);
                     distToMarker = Convert.tileToYeet(1);
+                    telemetry.addData("GLYPH POSITION NOT DEFINED, Defualting", glyphPosition);
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
@@ -141,6 +150,7 @@ public class Auto2 extends LinearOpMode {
                     angleToCrater = 135;
                     distToMineral = Convert.tileToYeet(1);
                     distToMarker = Convert.tileToYeet(1);
+                    telemetry.addData("GLYPH POSITION NOT DEFINED, Defualting", glyphPosition);
                 }
                 robot.drive.turn(angleToMineral);
                 robot.drive.vertical(distToMineral);
@@ -170,6 +180,7 @@ public class Auto2 extends LinearOpMode {
                     robot.drive.vertical(Convert.tileToYeet(1.5));
                 } else {
                     robot.drive.vertical(Convert.tileToYeet(2));
+                    telemetry.addData("Glyph position may or may not be defined", glyphPosition);
                 }
                 robot.drive.horizontal(Convert.tileToYeet(2));
             } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.blue){
@@ -189,6 +200,7 @@ public class Auto2 extends LinearOpMode {
                     robot.drive.vertical(Convert.tileToYeet(1.5));
                 } else {
                     robot.drive.vertical(Convert.tileToYeet(2));
+                    telemetry.addData("Glyph position may or may not be defined", glyphPosition);
                 }
                 robot.drive.horizontal(Convert.tileToYeet(2));
             }
