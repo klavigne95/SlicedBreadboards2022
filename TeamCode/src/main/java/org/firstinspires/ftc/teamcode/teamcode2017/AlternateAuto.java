@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teamcode2017;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -23,7 +24,7 @@ import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.
 public class AlternateAuto extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
-    private SamplingOrderDetector detector;
+    private GoldAlignDetector detector;
 
     public void runOpMode() throws InterruptedException {
         robot = new Robot2017(TeamColor.red, StartPosition.marker);
@@ -49,10 +50,21 @@ public class AlternateAuto extends LinearOpMode {
             */
             SamplingOrderDetector.GoldLocation glyphPosition;
             if(detector.isFound()){
-                glyphPosition = detector.getCurrentOrder();
+                if (detector.getXPosition() <= 160 || detector.getXPosition() > 0){
+                    glyphPosition = LEFT;
+                } else if (detector.getXPosition() > 160 || detector.getXPosition() <= 450){
+                    glyphPosition = CENTER;
+                } else if (detector.getXPosition() > 450 || detector.getXPosition() <= 640){
+                    glyphPosition = RIGHT;
+                } else {
+                    glyphPosition = CENTER;
+                    telemetry.addData("OUT OF BOUNDS, Default CENTER", glyphPosition);
+                }
+
             } else {
                 // TODO: Move robot to find glyphs
                 glyphPosition =  CENTER;
+                telemetry.addData("NO DETECTOR, Default CENTER", glyphPosition);
             }
             // If Pointed at Square ->
             if(robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.red){
@@ -234,7 +246,7 @@ public class AlternateAuto extends LinearOpMode {
     public void initDetector(){
         telemetry.addData("Status", "DogeCV 2018.0 - Sampling Order Example");
 
-        detector = new SamplingOrderDetector();
+        detector = new GoldAlignDetector();
         detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
         detector.useDefaults();
 
