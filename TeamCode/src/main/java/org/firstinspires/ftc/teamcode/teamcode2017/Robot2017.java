@@ -38,6 +38,7 @@ public class Robot2017 {
     public DcMotor brMotor;
     public Servo markerServo;
     public DcMotor liftMotor;
+    public DcMotor negLiftMotor;
     public Servo pulleyHolder;
     public DriveTrain drive;
     private HardwareMap hwMap;
@@ -85,6 +86,7 @@ public class Robot2017 {
         blMotor = hwMap.dcMotor.get("blmotor");
         brMotor = hwMap.dcMotor.get("brmotor");
         liftMotor = hwMap.dcMotor.get("liftMotor");
+        liftMotor = hwMap.dcMotor.get("negLiftMotor");
         markerServo = hwMap.servo.get("markerServo");
         pulleyHolder = hwMap.servo.get("pulleyHolder");
         //lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

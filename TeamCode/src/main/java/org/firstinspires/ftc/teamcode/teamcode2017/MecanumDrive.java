@@ -48,9 +48,9 @@ public class MecanumDrive extends LinearOpMode {
             telemetry.addData("right", "Running to %7d :%7d", robot.frMotor.getCurrentPosition(), robot.brMotor.getCurrentPosition());
 
             if (gamepad2.dpad_down) {
-                liftPow = -.2;
+                liftPow = -.5;
             } else if (gamepad2.dpad_up) {
-                liftPow = .4;
+                liftPow = .5;
             } else {
                 liftPow = 0;
             }
@@ -127,6 +127,7 @@ public class MecanumDrive extends LinearOpMode {
             robot.brMotor.setPower(v4);
             //robot.armmotor.setPower(armPow);
             robot.liftMotor.setPower(liftPow);
+            robot.negLiftMotor.setPower(-liftPow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
     }
