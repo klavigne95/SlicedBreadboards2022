@@ -47,10 +47,20 @@ public class MecanumDrive extends LinearOpMode {
             telemetry.addData("left", "Running to %7d :%7d", robot.flMotor.getCurrentPosition(), robot.blMotor.getCurrentPosition());
             telemetry.addData("right", "Running to %7d :%7d", robot.frMotor.getCurrentPosition(), robot.brMotor.getCurrentPosition());
 
+
+
             if (gamepad2.dpad_down) {
-                liftPow = -.2;
+                liftPow = -1;
             } else if (gamepad2.dpad_up) {
-                liftPow = .4;
+                liftPow = 1;
+            } else {
+                liftPow = 0;
+            }
+
+            if (gamepad2.a) {
+                liftPow = -0.5;
+            } else if (gamepad2.y) {
+                liftPow = 0.5;
             } else {
                 liftPow = 0;
             }
@@ -119,6 +129,7 @@ public class MecanumDrive extends LinearOpMode {
             //telemetry.addData("red", robot.cs.red());
             //telemetry.addData("blue", robot.cs.blue());
             telemetry.addData("Marker Servo Position: ", robot.markerServo.getPosition());
+            telemetry.addData("Pulley Holder Position: ", robot.pulleyHolder.getPosition());
             telemetry.update();
 
             robot.flMotor.setPower(v1);

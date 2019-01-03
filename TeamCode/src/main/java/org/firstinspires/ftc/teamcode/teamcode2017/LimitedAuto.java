@@ -39,15 +39,20 @@ public class LimitedAuto extends LinearOpMode {
         while (opModeIsActive()) {
             // Get Down
             /*
-            robot.liftMotor.setPower(.5);
-            wait1(500);
-            robot.liftMotor.setPower(0);
-            robot.drive.vertical(.1);
+            robot.liftMotor.setPower(1);
+            robot.wait(1);
+            robot.pulleyHolder.setPosition(.5f);
             robot.liftMotor.setPower(-.5);
-            wait1(500);
-            robot.liftMotor.setPower(0);
+            robot.wait(20);
+            robot.drive.horizontal(Convert.tileToYeet(.5));
+            robot.liftMotor.setPower(.5);
+            robot.wait(20);
+            robot.drive.vertical(Convert.tileToYeet(-.1));
+            robot.drive.turn(180);
+            robot.drive.horizontal(Convert.tileToYeet(.5));
             */
             //SCAN GLYPHS
+
             SamplingOrderDetector.GoldLocation glyphPosition;
             if(detector.isFound()){
                 glyphPosition = detector.getCurrentOrder();
@@ -55,6 +60,7 @@ public class LimitedAuto extends LinearOpMode {
                 // TODO: Move robot to find glyphs
                 glyphPosition =  CENTER;
             }
+            telemetry.addData("Glyph Position: ", glyphPosition);
 
             // If Pointed at Square ->
             if(robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.red){
@@ -79,15 +85,23 @@ public class LimitedAuto extends LinearOpMode {
                     distToMineral = Convert.tileToYeet(1.155);
                     distToMarker = Convert.tileToYeet(1.118);
                 } else {
-                    angleToMineral = 0;
-                    angleToMarker = 0;
-                    distToMineral = Convert.tileToYeet(1);
-                    distToMarker = Convert.tileToYeet(1);
+                    angleToMineral = 30;
+                    angleToMarker = -52;
+                    distToMineral = Convert.tileToYeet(1.155);
+                    distToMarker = Convert.tileToYeet(1.118);
                 }
                 robot.drive.turn(angleToMineral);
+                telemetry.addData("Currently: ", "turning, angleToMineral:" + angleToMineral);
+                telemetry.update();
                 robot.drive.vertical(distToMineral);
+                telemetry.addData("Currently: ", "moving, distToMineral" + distToMineral);
+                telemetry.update();
                 robot.drive.turn(angleToMarker);
+                telemetry.addData("Currently: ", "turning, angleToMarker" + angleToMarker);
+                telemetry.update();
                 robot.drive.vertical(distToMarker);
+                telemetry.addData("Currently: ", "moving, distToMarker" + distToMarker);
+                telemetry.update();
                 // Set Marker
                 deployMarker();
             } else if (robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.blue){
@@ -112,15 +126,23 @@ public class LimitedAuto extends LinearOpMode {
                     distToMineral = Convert.tileToYeet(1.155);
                     distToMarker = Convert.tileToYeet(1.118);
                 } else {
-                    angleToMineral = 0;
-                    angleToMarker = 0;
-                    distToMineral = Convert.tileToYeet(1);
-                    distToMarker = Convert.tileToYeet(1);
+                    angleToMineral = 30;
+                    angleToMarker = -52;
+                    distToMineral = Convert.tileToYeet(1.155);
+                    distToMarker = Convert.tileToYeet(1.118);
                 }
                 robot.drive.turn(angleToMineral);
+                telemetry.addData("Currently: ", "turning, angleToMineral:" + angleToMineral);
+                telemetry.update();
                 robot.drive.vertical(distToMineral);
+                telemetry.addData("Currently: ", "moving, distToMineral" + distToMineral);
+                telemetry.update();
                 robot.drive.turn(angleToMarker);
+                telemetry.addData("Currently: ", "turning, angleToMarker" + angleToMarker);
+                telemetry.update();
                 robot.drive.vertical(distToMarker);
+                telemetry.addData("Currently: ", "moving, distToMarker" + distToMarker);
+                telemetry.update();
                 // Set Marker
                 deployMarker();
                 // If Pointed at Crater
@@ -147,15 +169,23 @@ public class LimitedAuto extends LinearOpMode {
                     distToMineral = Convert.tileToYeet(1.155);
                     distToCrater = Convert.tileToYeet(2);
                 } else {
-                    angleToMineral = 0;
-                    angleToCrater = 0;
-                    distToMineral = Convert.tileToYeet(1);
+                    angleToMineral = 30;
+                    angleToCrater = -15;
+                    distToMineral = Convert.tileToYeet(1.155);
                     distToCrater = Convert.tileToYeet(2);
                 }
                 robot.drive.turn(angleToMineral);
+                telemetry.addData("Currently: ", "turning, angleToMineral:" + angleToMineral);
+                telemetry.update();
                 robot.drive.vertical(distToMineral);
+                telemetry.addData("Currently: ", "moving, distToMineral" + distToMineral);
+                telemetry.update();
                 robot.drive.turn(angleToCrater);
+                telemetry.addData("Currently: ", "turning, angleToCrater" + angleToCrater);
+                telemetry.update();
                 robot.drive.vertical(distToCrater);
+                telemetry.addData("Currently: ", "moving, distToCrater" + distToCrater);
+                telemetry.update();
             } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.blue){
                 // Set Marker NOT IN LIMITED
                 int angleToMineral;
@@ -179,24 +209,32 @@ public class LimitedAuto extends LinearOpMode {
                     distToMineral = Convert.tileToYeet(1.155);
                     distToCrater = Convert.tileToYeet(2);
                 } else {
-                    angleToMineral = 0;
-                    angleToCrater = 0;
-                    distToMineral = Convert.tileToYeet(1);
+                    angleToMineral = 30;
+                    angleToCrater = -15;
+                    distToMineral = Convert.tileToYeet(1.155);
                     distToCrater = Convert.tileToYeet(2);
                 }
                 robot.drive.turn(angleToMineral);
+                telemetry.addData("Currently: ", "turning, angleToMineral:" + angleToMineral);
+                telemetry.update();
                 robot.drive.vertical(distToMineral);
+                telemetry.addData("Currently: ", "moving, distToMineral" + distToMineral);
+                telemetry.update();
                 robot.drive.turn(angleToCrater);
+                telemetry.addData("Currently: ", "turning, angleToCrater" + angleToCrater);
+                telemetry.update();
                 robot.drive.vertical(distToCrater);
+                telemetry.addData("Currently: ", "moving, distToCrater" + distToCrater);
+                telemetry.update();
             }
             idle();
         }
     }
 
     public void deployMarker() throws InterruptedException{
-        //robot.markerServo.setPosition(.90f);
+        robot.markerServo.setPosition(.517f);
         wait1(1000);
-        //robot.markerServo.setPosition(.20f);
+        robot.markerServo.setPosition(.678f);
         wait1(1000);
     }
 
