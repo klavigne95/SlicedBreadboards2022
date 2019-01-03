@@ -6,7 +6,7 @@ package org.firstinspires.ftc.teamcode.game.robot;
 
 public class Convert {
     public static final double inchesInAYeet = 0.825; // Maybe
-    public static final double tileSize = 24;
+    public static final double tileSize = 23.5;
 
     public static int tileToYeet(double input) { return (int)(input * tileSize / inchesInAYeet); }
 
