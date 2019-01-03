@@ -66,13 +66,13 @@ public class LimitedAuto extends LinearOpMode {
                     glyphPosition = RIGHT;
                     telemetry.addData("Glyph Position:", glyphPosition);
                 } else {
-                    glyphPosition = CENTER;
-                    telemetry.addData("OUT OF BOUNDS, Default CENTER", glyphPosition);
+                    glyphPosition = RIGHT;
+                    telemetry.addData("OUT OF BOUNDS, Default RIGHT", glyphPosition);
                 }
             } else {
                 // TODO: Move robot to find glyphs
-                glyphPosition =  CENTER;
-                telemetry.addData("NO DETECTOR, Default CENTER", glyphPosition);
+                glyphPosition =  RIGHT;
+                telemetry.addData("NO DETECTOR, Default RIGHT", glyphPosition);
             }
             telemetry.update();
             // If Pointed at Square ->
