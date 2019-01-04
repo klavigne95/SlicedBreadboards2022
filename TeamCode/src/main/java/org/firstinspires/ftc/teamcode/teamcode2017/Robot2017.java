@@ -86,7 +86,7 @@ public class Robot2017 {
         blMotor = hwMap.dcMotor.get("blmotor");
         brMotor = hwMap.dcMotor.get("brmotor");
         liftMotor = hwMap.dcMotor.get("liftMotor");
-        liftMotor = hwMap.dcMotor.get("negLiftMotor");
+        negLiftMotor = hwMap.dcMotor.get("negLiftMotor");
         markerServo = hwMap.servo.get("markerServo");
         pulleyHolder = hwMap.servo.get("pulleyHolder");
         //lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

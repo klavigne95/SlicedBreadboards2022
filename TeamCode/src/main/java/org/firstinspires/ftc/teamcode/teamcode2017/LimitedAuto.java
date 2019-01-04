@@ -42,7 +42,7 @@ public class LimitedAuto extends LinearOpMode {
             /*
             robot.liftMotor.setPower(1);
             robot.wait(1);
-            robot.pulleyHolder.setPosition(.779f);
+            robot.pulleyHolder.setPosition(.629f);
             robot.liftMotor.setPower(-.5);
             robot.wait(20);
             robot.drive.horizontal(Convert.tileToYeet(.5));
@@ -105,19 +105,19 @@ public class LimitedAuto extends LinearOpMode {
                     telemetry.addData("GLYPH POSITION NOT DEFINED, Defualting", glyphPosition);
                     telemetry.update();
                 }
-                telemetry.addData("Currently: ", "turning, angleToMineral:" + angleToMineral);
+                telemetry.addData("Turning, angleToMineral: ",  angleToMineral);
+                telemetry.addData("Moving, distToMineral: " , distToMineral);
+                telemetry.addData("Turning, angleToMarker: " , angleToMarker);
+                telemetry.addData("Moving, distToMarker: " , distToMarker);
                 telemetry.update();
+
                 robot.drive.turn(angleToMineral);
-                telemetry.addData("Currently: ", "moving, distToMineral" + distToMineral);
-                telemetry.update();
                 robot.drive.vertical(distToMineral);
-                telemetry.addData("Currently: ", "turning, angleToMarker" + angleToMarker);
-                telemetry.update();
                 robot.drive.turn(angleToMarker);
-                telemetry.addData("Currently: ", "moving, distToMarker" + distToMarker);
-                telemetry.update();
                 robot.drive.vertical(distToMarker);
                 // Set Marker
+                telemetry.addData("Currently: ", "DEPLOYING MARKER");
+                telemetry.update();
                 deployMarker();
             } else if (robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.blue){
                 // Move Gold
@@ -147,19 +147,20 @@ public class LimitedAuto extends LinearOpMode {
                     distToMarker = Convert.tileToYeet(1.5);
                     telemetry.addData("GLYPH POSITION NOT DEFINED, Defualting", glyphPosition);
                 }
-                telemetry.addData("Currently: ", "turning, angleToMineral:" + angleToMineral);
+                telemetry.addData("Turning, angleToMineral: ",  angleToMineral);
+                telemetry.addData("Moving, distToMineral: " , distToMineral);
+                telemetry.addData("Turning, angleToMarker: " , angleToMarker);
+                telemetry.addData("Moving, distToMarker: " , distToMarker);
                 telemetry.update();
+
                 robot.drive.turn(angleToMineral);
-                telemetry.addData("Currently: ", "moving, distToMineral" + distToMineral);
-                telemetry.update();
                 robot.drive.vertical(distToMineral);
-                telemetry.addData("Currently: ", "turning, angleToMarker" + angleToMarker);
-                telemetry.update();
                 robot.drive.turn(angleToMarker);
-                telemetry.addData("Currently: ", "moving, distToMarker" + distToMarker);
-                telemetry.update();
                 robot.drive.vertical(distToMarker);
+
                 // Set Marker
+                telemetry.addData("Currently: ", "DEPLOYING MARKER");
+                telemetry.update();
                 deployMarker();
                 // If Pointed at Crater
             }  else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.red){
@@ -191,17 +192,15 @@ public class LimitedAuto extends LinearOpMode {
                     distToCrater = Convert.tileToYeet(2);
                     telemetry.addData("GLYPH POSITION NOT DEFINED, Defualting", glyphPosition);
                 }
-                telemetry.addData("Currently: ", "turning, angleToMineral:" + angleToMineral);
+                telemetry.addData("Turning, angleToMineral: " , angleToMineral);
+                telemetry.addData("Moving, distToMineral: " , distToMineral);
+                telemetry.addData("Turning, angleToCrater: " , angleToCrater);
+                telemetry.addData("Moving, distToCrater: " , distToCrater);
                 telemetry.update();
+
                 robot.drive.turn(angleToMineral);
-                telemetry.addData("Currently: ", "moving, distToMineral" + distToMineral);
-                telemetry.update();
                 robot.drive.vertical(distToMineral);
-                telemetry.addData("Currently: ", "turning, angleToCrater" + angleToCrater);
-                telemetry.update();
                 robot.drive.turn(angleToCrater);
-                telemetry.addData("Currently: ", "moving, distToCrater" + distToCrater);
-                telemetry.update();
                 robot.drive.vertical(distToCrater);
             } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.blue){
                 // Set Marker NOT IN LIMITED
@@ -232,17 +231,15 @@ public class LimitedAuto extends LinearOpMode {
                     distToCrater = Convert.tileToYeet(2);
                     telemetry.addData("GLYPH POSITION NOT DEFINED, Defualting", glyphPosition);
                 }
-                telemetry.addData("Currently: ", "turning, angleToMineral:" + angleToMineral);
+                telemetry.addData("Turning, angleToMineral: " , angleToMineral);
+                telemetry.addData("Moving, distToMineral: " , distToMineral);
+                telemetry.addData("Turning, angleToCrater: " , angleToCrater);
+                telemetry.addData("Moving, distToCrater: " , distToCrater);
                 telemetry.update();
+
                 robot.drive.turn(angleToMineral);
-                telemetry.addData("Currently: ", "moving, distToMineral" + distToMineral);
-                telemetry.update();
                 robot.drive.vertical(distToMineral);
-                telemetry.addData("Currently: ", "turning, angleToCrater" + angleToCrater);
-                telemetry.update();
                 robot.drive.turn(angleToCrater);
-                telemetry.addData("Currently: ", "moving, distToCrater" + distToCrater);
-                telemetry.update();
                 robot.drive.vertical(distToCrater);
             }
             wait1(1000000000);
@@ -250,9 +247,9 @@ public class LimitedAuto extends LinearOpMode {
     }
 
     public void deployMarker() throws InterruptedException{
-        robot.markerServo.setPosition(.517f);
-        wait1(1000);
-        robot.markerServo.setPosition(.678f);
+        robot.markerServo.setPosition(.487f);
+        wait1(4000);
+        robot.markerServo.setPosition(.637);
         wait1(1000);
     }
 
