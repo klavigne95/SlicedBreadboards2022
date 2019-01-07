@@ -30,7 +30,6 @@ public class Robot2017 {
     //final float griprout = .48f;
     public float markerUp = .20f;
     public float markerDown = .90f;
-    public TeamColor teamColor;
     public StartPosition startPosition;
     public boolean isHooked;
     public DcMotor flMotor;
@@ -51,7 +50,6 @@ public class Robot2017 {
     }
 
     public Robot2017(TeamColor color, StartPosition pos) {
-        this.teamColor = color;
         this.startPosition = pos;
     }
 

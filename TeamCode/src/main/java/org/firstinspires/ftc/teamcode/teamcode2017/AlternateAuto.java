@@ -136,86 +136,7 @@ public class AlternateAuto extends LinearOpMode {
 
                 robot.drive.turn(angleToCrater);
                 robot.drive.vertical(Convert.tileToYeet(4.5)); // 24*3.5/1.574803 Moving Across 3.5ish tiles
-            } else if (robot.startPosition == StartPosition.marker && robot.teamColor == TeamColor.blue){
-                // Move Gold
-                int angleToMineral;
-                int angleToMarker;
-                int angleToCrater;
-                int distToMineral;
-                int distToMarker;
-                if (glyphPosition == LEFT) {
-                    angleToMineral = -30;
-                    angleToMarker = 52;
-                    angleToCrater = 92;
-                    distToMineral = Convert.tileToYeet(1.633);
-                    distToMarker = Convert.tileToYeet(1.633); //1.5 but not far enough
-                } else if (glyphPosition == CENTER){
-                    angleToMineral = 0;
-                    angleToMarker = 0;
-                    angleToCrater = 115;
-                    distToMineral = Convert.tileToYeet(1.414);
-                    distToMarker = Convert.tileToYeet(1.414);
-                } else if (glyphPosition == RIGHT){
-                    angleToMineral = 30;
-                    angleToMarker = -52;
-                    angleToCrater = 138;
-                    distToMineral = Convert.tileToYeet(1.633);
-                    distToMarker = Convert.tileToYeet(1.5);
-                } else {
-                    angleToMineral = 30;
-                    angleToMarker = -52;
-                    angleToCrater = 138;
-                    distToMineral = Convert.tileToYeet(1.633);
-                    distToMarker = Convert.tileToYeet(1.5);
-                    telemetry.addData("GLYPH POSITION NOT DEFINED, Defualting", glyphPosition);
-                }
-                telemetry.addData("Turning, angleToMineral: ",  angleToMineral);
-                telemetry.addData("Moving, distToMineral: " , distToMineral);
-                telemetry.addData("Turning, angleToMarker: " , angleToMarker);
-                telemetry.addData("Moving, distToMarker: " , distToMarker);
-                telemetry.update();
-
-                robot.drive.turn(angleToMineral);
-                robot.drive.vertical(distToMineral);
-                robot.drive.turn(angleToMarker);
-                robot.drive.vertical(distToMarker);
-
-                // Set Marker
-                telemetry.addData("Currently: ", "DEPLOYING MARKER");
-                telemetry.update();
-                deployMarker();
-                // Park in Crater
-                telemetry.addData("Turning, angleToCrater: " , angleToCrater);
-                telemetry.addData("Moving, distToCrater: " , Convert.tileToYeet(4.5));
-                telemetry.update();
-
-                robot.drive.turn(angleToCrater);
-                robot.drive.vertical(Convert.tileToYeet(4.5)); // 24*3.5/1.574803 Moving Across 3.5ish tiles
-
-                // If Pointed at Crater
-            } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.red){
-                // Set Marker
-                robot.drive.turn(-45);
-                robot.drive.vertical(Convert.tileToYeet(2));
-                robot.drive.turn(-115); //-135
-                robot.drive.vertical(Convert.tileToYeet(3.535));
-                robot.drive.turn(115); //135
-                robot.drive.vertical(Convert.tileToYeet(3));
-                deployMarker();
-                // Park in Crater, While Moving Gold
-                robot.drive.turn(80); //90
-                robot.drive.vertical(Convert.tileToYeet(2));
-                robot.drive.turn(45);
-                if(glyphPosition == LEFT){
-                    robot.drive.vertical(Convert.tileToYeet(.707));
-                } else if (glyphPosition == CENTER) {
-                    robot.drive.vertical(Convert.tileToYeet(1.414));
-                } else {
-                    robot.drive.vertical(Convert.tileToYeet(2.121));
-                    telemetry.addData("Glyph position may or may not be defined", glyphPosition);
-                }
-                robot.drive.horizontal(Convert.tileToYeet(2));
-            } else if (robot.startPosition == StartPosition.crater && robot.teamColor == TeamColor.blue){
+            } else if (robot.startPosition == StartPosition.crater){
                 // Set Marker
                 robot.drive.turn(-45);
                 robot.drive.vertical(Convert.tileToYeet(2));
@@ -252,18 +173,6 @@ public class AlternateAuto extends LinearOpMode {
     }
 
     private void inputGameConfig() {
-        telemetry.addData("Input team color", "Red (press b) or Blue (press x)");
-        telemetry.update();
-        while (!gamepad1.b && !gamepad1.x) {
-        }
-
-        if (gamepad1.b == true) {
-            robot.teamColor = TeamColor.red;
-        } else {
-            robot.teamColor = TeamColor.blue;
-        }
-        telemetry.addData("Chosen Start postion", robot.startPosition);
-
         telemetry.addData("Input which side", "Left (Square) or right (Crater) (use triggers)");
         telemetry.update();
         while (gamepad1.left_trigger < 0.5 && gamepad1.right_trigger < 0.5) {
@@ -274,7 +183,7 @@ public class AlternateAuto extends LinearOpMode {
         } else {
             robot.startPosition = StartPosition.crater;
         }
-        telemetry.addData("Chosen team color", robot.teamColor);
+        telemetry.addData("Chosen Start Position", robot.startPosition);
 
         telemetry.addData("Are you starting Hooked?", "Yes (Y) or No (X)");
         telemetry.update();
@@ -289,7 +198,6 @@ public class AlternateAuto extends LinearOpMode {
 
         telemetry.addData("isHooked?", robot.isHooked);
         telemetry.addData("Start postion", robot.startPosition);
-        telemetry.addData("Team Color", robot.teamColor);
         telemetry.update();
     }
 
