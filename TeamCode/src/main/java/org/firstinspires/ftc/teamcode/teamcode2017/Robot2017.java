@@ -32,6 +32,7 @@ public class Robot2017 {
     public float markerDown = .90f;
     public TeamColor teamColor;
     public StartPosition startPosition;
+    public boolean isHooked;
     public DcMotor flMotor;
     public DcMotor frMotor;
     public DcMotor blMotor;

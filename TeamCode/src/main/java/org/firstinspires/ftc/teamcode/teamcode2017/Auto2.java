@@ -40,19 +40,25 @@ public class Auto2 extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             // Get Down
-            /*
-            robot.liftMotor.setPower(1);
-            robot.wait(1);
-            robot.pulleyHolder.setPosition(.629f); //latch is .168
-            robot.liftMotor.setPower(-.5);
-            robot.wait(20);
-            robot.drive.horizontal(Convert.tileToYeet(.5));
-            robot.liftMotor.setPower(.5);
-            robot.wait(20);
-            robot.drive.vertical(Convert.tileToYeet(-.1));
-            robot.drive.turn(180);
-            robot.drive.horizontal(Convert.tileToYeet(.5));
-            */
+
+            if(robot.isHooked) {
+                robot.liftMotor.setPower(-0.75);
+                wait1(250);
+                robot.pulleyHolder.setPosition(.655f); //latch is .168
+                wait1(2000);
+                robot.liftMotor.setPower(0);
+                wait1(1500);
+                robot.liftMotor.setPower(.5);
+                wait1(100);
+                robot.drive.vertical(Convert.tileToYeet(-.1));
+                robot.drive.horizontal(Convert.tileToYeet(-0.414));
+                robot.liftMotor.setPower(-0.5);
+                robot.drive.vertical(Convert.tileToYeet(-.3));
+                robot.drive.horizontal(Convert.tileToYeet(.414));
+                robot.drive.turn(165);
+                robot.drive.vertical(Convert.tileToYeet(-.1));
+            }
+
             // SCAN GLYPHS
             SamplingOrderDetector.GoldLocation glyphPosition;
             if(detector.isFound()){
@@ -89,7 +95,7 @@ public class Auto2 extends LinearOpMode {
                     angleToMarker = 52;
                     angleToCrater = 92;
                     distToMineral = Convert.tileToYeet(1.633);
-                    distToMarker = Convert.tileToYeet(1.5);
+                    distToMarker = Convert.tileToYeet(1.633); //1.5 but not far enough
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
@@ -144,7 +150,7 @@ public class Auto2 extends LinearOpMode {
                     angleToMarker = 52;
                     angleToCrater = 92;
                     distToMineral = Convert.tileToYeet(1.633);
-                    distToMarker = Convert.tileToYeet(1.5);
+                    distToMarker = Convert.tileToYeet(1.633); //1.5 but not far enough
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
@@ -236,9 +242,11 @@ public class Auto2 extends LinearOpMode {
 
     public void deployMarker() throws InterruptedException{
         robot.markerServo.setPosition(.487f);
-        wait1(4000);
+        wait1(250);
+        robot.drive.vertical(Convert.tileToYeet(-.1));
         robot.markerServo.setPosition(.637);
-        wait1(1000);
+        wait1(250);
+        robot.drive.vertical(Convert.tileToYeet(.1));
     }
 
     private void inputGameConfig() {
@@ -247,12 +255,12 @@ public class Auto2 extends LinearOpMode {
         while (!gamepad1.b && !gamepad1.x) {
         }
 
-        if (gamepad1.b) {
+        if (gamepad1.b == true) {
             robot.teamColor = TeamColor.red;
         } else {
             robot.teamColor = TeamColor.blue;
         }
-        telemetry.addData("Chosen team color", robot.teamColor);
+        telemetry.addData("Chosen Start postion", robot.startPosition);
 
         telemetry.addData("Input which side", "Left (Square) or right (Crater) (use triggers)");
         telemetry.update();
@@ -264,7 +272,22 @@ public class Auto2 extends LinearOpMode {
         } else {
             robot.startPosition = StartPosition.crater;
         }
-        telemetry.addData("Chosen start postion", robot.startPosition);
+        telemetry.addData("Chosen team color", robot.teamColor);
+
+        telemetry.addData("Are you starting Hooked?", "Yes (Y) or No (X)");
+        telemetry.update();
+        while (!gamepad1.y && !gamepad1.x) {
+        }
+
+        if (gamepad1.y) {
+            robot.isHooked = true;
+        } else {
+            robot.isHooked = false;
+        }
+
+        telemetry.addData("isHooked?", robot.isHooked);
+        telemetry.addData("Start postion", robot.startPosition);
+        telemetry.addData("Team Color", robot.teamColor);
         telemetry.update();
     }
 

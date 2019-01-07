@@ -50,9 +50,9 @@ public class MecanumDrive extends LinearOpMode {
 
 
             if (gamepad2.dpad_down) {
-                liftPow = -1;
+                liftPow = -0.75;
             } else if (gamepad2.dpad_up) {
-                liftPow = 1;
+                liftPow = 0.75;
             } else if (gamepad2.a) {
                 liftPow = -0.5;
             } else if (gamepad2.y) {
@@ -61,15 +61,15 @@ public class MecanumDrive extends LinearOpMode {
                 liftPow = 0;
             }
 
-            if (gamepad2.right_trigger > .5 && robot.markerServo.getPosition() < 1.489) {
+            if (gamepad2.right_trigger > .5 && robot.markerServo.getPosition() < 0.7994) {
                 robot.markerServo.setPosition(robot.markerServo.getPosition() + .01);
-            } else if (gamepad2.right_bumper && robot.markerServo.getPosition() > -.489) {
+            } else if (gamepad2.right_bumper && robot.markerServo.getPosition() > 0.4698) {
                 robot.markerServo.setPosition(robot.markerServo.getPosition() - .01);
             }
 
-            if (gamepad2.left_trigger > .5 && robot.pulleyHolder.getPosition() < 1.489) {
+            if (gamepad2.left_trigger > .5 && robot.pulleyHolder.getPosition() < 0.7983) {
                 robot.pulleyHolder.setPosition(robot.pulleyHolder.getPosition() + .01);
-            } else if (gamepad2.left_bumper && robot.pulleyHolder.getPosition() > -.489) {
+            } else if (gamepad2.left_bumper && robot.pulleyHolder.getPosition() > 0.5083) {
                 robot.pulleyHolder.setPosition(robot.pulleyHolder.getPosition() - .01);
             }
 
@@ -87,10 +87,18 @@ public class MecanumDrive extends LinearOpMode {
             telemetry.addData("Pulley Holder Position: ", robot.pulleyHolder.getPosition());
             telemetry.update();
 
-            robot.flMotor.setPower(v1);
-            robot.frMotor.setPower(v2);
-            robot.blMotor.setPower(v3);
-            robot.brMotor.setPower(v4);
+            if(gamepad1.right_bumper){
+                robot.flMotor.setPower(v1/2);
+                robot.frMotor.setPower(v2/2);
+                robot.blMotor.setPower(v3/2);
+                robot.brMotor.setPower(v4/2);
+            } else {
+                robot.flMotor.setPower(v1);
+                robot.frMotor.setPower(v2);
+                robot.blMotor.setPower(v3);
+                robot.brMotor.setPower(v4);
+            }
+
             robot.liftMotor.setPower(liftPow);
             robot.negLiftMotor.setPower(-liftPow);
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
