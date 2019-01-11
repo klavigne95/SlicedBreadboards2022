@@ -27,7 +27,7 @@ public class LimitedAuto extends LinearOpMode {
     private GoldAlignDetector detector;
 
     public void runOpMode() throws InterruptedException {
-        robot = new Robot2017(TeamColor.red, StartPosition.marker);
+        robot = new Robot2017(true, StartPosition.marker);
         robot.init(hardwareMap);
         robot.setTelemetry(telemetry);
         robot.setTime(runtime);
@@ -38,8 +38,7 @@ public class LimitedAuto extends LinearOpMode {
         //Wait for the match to begin, presses start button
         waitForStart();
         while (opModeIsActive()) {
-            // Get Down
-
+            // UNHOOK //
             if(robot.isHooked) {
                 robot.liftMotor.setPower(-0.75);
                 wait1(250);
@@ -53,13 +52,12 @@ public class LimitedAuto extends LinearOpMode {
                 robot.drive.horizontal(Convert.tileToYeet(-0.414));
                 robot.liftMotor.setPower(-0.5);
                 robot.drive.vertical(Convert.tileToYeet(-.3));
-                robot.drive.horizontal(Convert.tileToYeet(.414));
-                robot.drive.turn(165);
+                robot.drive.horizontal(Convert.tileToYeet(.205));
+                robot.drive.turn(180);
                 robot.drive.vertical(Convert.tileToYeet(-.1));
             }
 
-            //SCAN GLYPHS
-
+            // SCAN GLYPHS //
             SamplingOrderDetector.GoldLocation glyphPosition;
             if(detector.isFound()){
                 if (detector.getXPosition() <= 210 && detector.getXPosition() > 0){
@@ -80,8 +78,11 @@ public class LimitedAuto extends LinearOpMode {
                 glyphPosition =  RIGHT;
                 telemetry.addData("NO DETECTOR, Default RIGHT", glyphPosition);
             }
+            telemetry.addData("Glyph Position: ", glyphPosition);
             telemetry.update();
-            // If Pointed at Square ->
+
+            robot.drive.turn(180);
+            // IF POINTED TO DEPOT //
             if(robot.startPosition == StartPosition.marker){
                 // Move Gold
                 int angleToMineral;
@@ -126,6 +127,8 @@ public class LimitedAuto extends LinearOpMode {
                 telemetry.update();
                 deployMarker();
             } else if (robot.startPosition == StartPosition.crater){
+                robot.drive.vertical(Convert.tileToYeet(.4));
+                robot.drive.turn(180);
                 // Set Marker NOT IN LIMITED
                 int angleToMineral;
                 int angleToCrater;
@@ -135,23 +138,23 @@ public class LimitedAuto extends LinearOpMode {
                 if(glyphPosition == LEFT){
                     angleToMineral = -30;
                     angleToCrater = 30;
-                    distToMineral = Convert.tileToYeet(1.633);
-                    distToCrater = Convert.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(-1.633);
+                    distToCrater = Convert.tileToYeet(-2);
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToCrater = 0;
-                    distToMineral = Convert.tileToYeet(1.414);
-                    distToCrater = Convert.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(-1.414);
+                    distToCrater = Convert.tileToYeet(-2);
                 } else if (glyphPosition == RIGHT) {
                     angleToMineral = 30;
                     angleToCrater = -15;
-                    distToMineral = Convert.tileToYeet(1.633);
-                    distToCrater = Convert.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(-1.633);
+                    distToCrater = Convert.tileToYeet(-2);
                 } else {
                     angleToMineral = 30;
                     angleToCrater = -15;
-                    distToMineral = Convert.tileToYeet(1.633);
-                    distToCrater = Convert.tileToYeet(2);
+                    distToMineral = Convert.tileToYeet(-1.633);
+                    distToCrater = Convert.tileToYeet(-2);
                     telemetry.addData("GLYPH POSITION NOT DEFINED, Defualting", glyphPosition);
                 }
                 telemetry.addData("Turning, angleToMineral: " , angleToMineral);
@@ -169,13 +172,13 @@ public class LimitedAuto extends LinearOpMode {
         }
     }
 
+    //DIFFERENT FOR EACH
     public void deployMarker() throws InterruptedException{
         robot.markerServo.setPosition(.487f);
-        wait1(300);
-        robot.drive.vertical(Convert.tileToYeet(-.1));
-        robot.markerServo.setPosition(.637);
-        wait1(300);
-        robot.drive.vertical(Convert.tileToYeet(.1));
+        wait1(250);
+        robot.drive.vertical(Convert.tileToYeet(-.707));
+        robot.markerServo.setPosition(.637f);
+        wait1(250);
     }
 
     private void inputGameConfig() {

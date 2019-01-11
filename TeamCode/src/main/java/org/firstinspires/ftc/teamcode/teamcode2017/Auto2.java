@@ -22,13 +22,12 @@ import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.
 @TeleOp(name = "Auto2", group = "Auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
 public class Auto2 extends LinearOpMode {
-    // 40 cm = 15.74803 in = 10
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private GoldAlignDetector detector;
 
     public void runOpMode() throws InterruptedException {
-        robot = new Robot2017(TeamColor.red, StartPosition.marker);
+        robot = new Robot2017(true, StartPosition.marker);
         robot.init(hardwareMap);
         robot.setTelemetry(telemetry);
         robot.setTime(runtime);
@@ -53,8 +52,8 @@ public class Auto2 extends LinearOpMode {
                 robot.drive.horizontal(Convert.tileToYeet(-0.414));
                 robot.liftMotor.setPower(-0.5);
                 robot.drive.vertical(Convert.tileToYeet(-.3));
-                robot.drive.horizontal(Convert.tileToYeet(.414));
-                robot.drive.turn(165);
+                robot.drive.horizontal(Convert.tileToYeet(.205));
+                robot.drive.turn(180);
                 robot.drive.vertical(Convert.tileToYeet(-.1));
             }
 
@@ -80,10 +79,9 @@ public class Auto2 extends LinearOpMode {
                 telemetry.addData("NO DETECTOR, Default RIGHT", glyphPosition);
             }
             telemetry.addData("Glyph Position: ", glyphPosition);
-            //telemetry.update();
+            telemetry.update();
 
-
-            // If Pointed at Square ->
+            // IF POINTED TO DEPOT //
             if(robot.startPosition == StartPosition.marker){
                 // Move Gold
                 int angleToMineral;
@@ -94,25 +92,25 @@ public class Auto2 extends LinearOpMode {
                 if (glyphPosition == LEFT) {
                     angleToMineral = -30;
                     angleToMarker = 52;
-                    angleToCrater = 92;
+                    angleToCrater = -64;
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.633); //1.5 but not far enough
                 } else if (glyphPosition == CENTER){
                     angleToMineral = 0;
                     angleToMarker = 0;
-                    angleToCrater = 115;
+                    angleToCrater = -45;
                     distToMineral = Convert.tileToYeet(1.414);
                     distToMarker = Convert.tileToYeet(1.414);
                 } else if (glyphPosition == RIGHT){
                     angleToMineral = 30;
                     angleToMarker = -52;
-                    angleToCrater = 138;
+                    angleToCrater = -26;
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.5);
                 } else {
                     angleToMineral = 30;
                     angleToMarker = -52;
-                    angleToCrater = 138;
+                    angleToCrater = 26;
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.5);
                     telemetry.addData("GLYPH POSITION NOT DEFINED, Defualting", glyphPosition);
@@ -138,39 +136,40 @@ public class Auto2 extends LinearOpMode {
                 telemetry.update();
 
                 robot.drive.turn(angleToCrater);
-                robot.drive.vertical(Convert.tileToYeet(4.5)); // 24*3.5/1.574803 Moving Across 3.5ish tiles
+                robot.drive.vertical(Convert.tileToYeet(-4.5)); // 24*3.5/1.574803 Moving Across 3.5ish tiles
             } else if (robot.startPosition == StartPosition.crater) {
                 // Set Marker
                 robot.drive.turn(-45);
                 robot.drive.vertical(Convert.tileToYeet(1.8));//1.5
-                robot.drive.turn(-80); //-90
+                robot.drive.turn(-90);
                 robot.drive.vertical(Convert.tileToYeet(3.25));
                 deployMarker();
                 // Park in Crater, While Moving Gold
-                robot.drive.turn(160);//180
-                robot.drive.vertical(Convert.tileToYeet(2.55));
+                robot.drive.vertical(Convert.tileToYeet(-2.55));
                 robot.drive.turn(45);
                 if (glyphPosition == LEFT) {
-                    robot.drive.vertical(Convert.tileToYeet(.707+.2));
+                    robot.drive.vertical(Convert.tileToYeet(-.707-.2));
                 } else if (glyphPosition == CENTER) {
-                    robot.drive.vertical(Convert.tileToYeet(1.414+.2));
+                    robot.drive.vertical(Convert.tileToYeet(-1.414-.2));
                 } else {
-                    robot.drive.vertical(Convert.tileToYeet(2.121+.2));
+                    robot.drive.vertical(Convert.tileToYeet(-2.121-.2));
                     telemetry.addData("Glyph position may or may not be defined", glyphPosition);
                 }
-                robot.drive.horizontal(Convert.tileToYeet(-2));
+                robot.drive.horizontal(Convert.tileToYeet(2));
             }
             wait1(1000000000);
         }
     }
 
+    //DIFFERENT FOR EACH
     public void deployMarker() throws InterruptedException{
         robot.markerServo.setPosition(.487f);
         wait1(250);
-        robot.drive.vertical(Convert.tileToYeet(-.1));
+        /*
+        robot.drive.vertical(Convert.tileToYeet(-.25));
         robot.markerServo.setPosition(.637);
         wait1(250);
-        robot.drive.vertical(Convert.tileToYeet(.1));
+        */
     }
 
     private void inputGameConfig() {

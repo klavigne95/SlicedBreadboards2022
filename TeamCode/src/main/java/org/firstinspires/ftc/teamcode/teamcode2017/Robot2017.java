@@ -49,7 +49,8 @@ public class Robot2017 {
 
     }
 
-    public Robot2017(TeamColor color, StartPosition pos) {
+    public Robot2017(boolean isHooked, StartPosition pos) {
+        this.isHooked = true;
         this.startPosition = pos;
     }
 
@@ -109,13 +110,13 @@ public class Robot2017 {
     }
 
     public class DriveTrain {
-        static final double COUNTS_PER_MOTOR_REV = 1120;    // eg: TETRIX Motor Encoder
+        static final double COUNTS_PER_MOTOR_REV = 1120;    // REV Motor Encoder
         //andymark is 1440 (this needs to be fact-checked)
         static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
         static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
         static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                 (WHEEL_DIAMETER_INCHES * Math.PI);
-        static final double ROBOT_WIDTH = 17.0;
+        static final double ROBOT_WIDTH = 18.0;
         static final double TURN_LENGTH = ROBOT_WIDTH * Math.PI / 4;
         DcMotor.Direction leftDefaultDir = DcMotor.Direction.FORWARD; //Hehe
         DcMotor.Direction rightDefaultDir = DcMotor.Direction.REVERSE; //Hehe

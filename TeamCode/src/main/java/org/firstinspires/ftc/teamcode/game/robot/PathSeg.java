@@ -35,7 +35,7 @@ public class PathSeg {
         this.bld = rat45 * bld;
         this.brd = rat45 * brd;
 
-        speed = .5;
+        speed = .75; //WAS .5
         this.runtime = runtime;
     }
 
