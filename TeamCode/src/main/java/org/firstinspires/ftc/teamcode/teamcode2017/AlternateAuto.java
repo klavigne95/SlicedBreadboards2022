@@ -43,18 +43,16 @@ public class AlternateAuto extends LinearOpMode {
                 robot.liftMotor.setPower(-0.75);
                 wait1(250);
                 robot.pulleyHolder.setPosition(.655f); //latch is .168
-                wait1(2000);
-                robot.liftMotor.setPower(0);
+                wait1(1000);
+                robot.liftMotor.setPower(1);
                 wait1(1500);
-                robot.liftMotor.setPower(.5);
-                wait1(100);
                 robot.drive.vertical(Convert.tileToYeet(-.1));
                 robot.drive.horizontal(Convert.tileToYeet(-0.414));
                 robot.liftMotor.setPower(-0.5);
                 robot.drive.vertical(Convert.tileToYeet(-.3));
-                robot.drive.horizontal(Convert.tileToYeet(.205));
+                robot.drive.horizontal(Convert.tileToYeet(.414));
                 robot.drive.turn(180);
-                robot.drive.vertical(Convert.tileToYeet(-.1));
+                robot.drive.vertical(Convert.tileToYeet(-.3));
             }
 
             // SCAN GLYPHS //
@@ -138,6 +136,8 @@ public class AlternateAuto extends LinearOpMode {
                 robot.drive.turn(angleToCrater);
                 robot.drive.vertical(Convert.tileToYeet(4.5)); // 24*3.5/1.574803 Moving Across 3.5ish tiles
             } else if (robot.startPosition == StartPosition.crater){
+                telemetry.addData("Glyph Position: ", glyphPosition);
+                telemetry.update();
                 // Set Marker
                 robot.drive.turn(-45);
                 robot.drive.vertical(Convert.tileToYeet(2));
@@ -148,17 +148,19 @@ public class AlternateAuto extends LinearOpMode {
                 // Park in Crater, While Moving Gold
                 robot.drive.turn(-90);
                 deployMarker();
-                robot.drive.vertical(Convert.tileToYeet(-2));
+                robot.drive.vertical(Convert.tileToYeet(-3));
+                wait1(1000);
                 robot.drive.turn(45);
                 if (glyphPosition == LEFT) {
-                    robot.drive.vertical(Convert.tileToYeet(-.707-.2));
+                    robot.drive.vertical(Convert.tileToYeet(-1.414));
                 } else if (glyphPosition == CENTER) {
-                    robot.drive.vertical(Convert.tileToYeet(-1.414-.2));
+                    robot.drive.vertical(Convert.tileToYeet(-2.121));
                 } else {
-                    robot.drive.vertical(Convert.tileToYeet(-2.121-.2));
+                    robot.drive.vertical(Convert.tileToYeet(-2.828));
                     telemetry.addData("Glyph position may or may not be defined", glyphPosition);
                 }
-                robot.drive.horizontal(Convert.tileToYeet(2));
+                robot.drive.turn(90);
+                robot.drive.vertical(Convert.tileToYeet(-2));
             }
             wait1(1000000000);
         }
@@ -166,12 +168,9 @@ public class AlternateAuto extends LinearOpMode {
 
     public void deployMarker() throws InterruptedException{
         robot.markerServo.setPosition(.487f);
+        wait1(1000);
+        robot.markerServo.setPosition(.637f);
         wait1(250);
-        /*
-        robot.drive.vertical(Convert.tileToYeet(-.25));
-        robot.markerServo.setPosition(.637);
-        wait1(250);
-        */
     }
 
     private void inputGameConfig() {

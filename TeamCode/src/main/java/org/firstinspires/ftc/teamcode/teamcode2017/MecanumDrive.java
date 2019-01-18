@@ -87,7 +87,7 @@ public class MecanumDrive extends LinearOpMode {
             telemetry.addData("Pulley Holder Position: ", robot.pulleyHolder.getPosition());
             telemetry.update();
 
-            if(gamepad1.right_bumper){
+            if(gamepad1.y){
                 robot.flMotor.setPower(v1/2);
                 robot.frMotor.setPower(v2/2);
                 robot.blMotor.setPower(v3/2);

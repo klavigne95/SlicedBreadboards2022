@@ -8,12 +8,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+import org.firstinspires.ftc.teamcode.game.robot.Convert;
 import org.firstinspires.ftc.teamcode.game.robot.StartPosition;
-import org.firstinspires.ftc.teamcode.game.robot.TeamColor;
 
 import java.util.concurrent.TimeUnit;
-
-import org.firstinspires.ftc.teamcode.game.robot.Convert;
 
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.CENTER;
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.LEFT;
@@ -21,7 +21,7 @@ import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.
 
 @TeleOp(name = "LimitAutonomous", group = "Auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
-public class LimitedAuto extends LinearOpMode {
+public class LimitedAutoGyro extends LinearOpMode {
     private Robot2017 robot;
     private ElapsedTime runtime = new ElapsedTime();
     private GoldAlignDetector detector;
@@ -37,6 +37,8 @@ public class LimitedAuto extends LinearOpMode {
 
         //Wait for the match to begin, presses start button
         waitForStart();
+        robot.imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
+
         while (opModeIsActive()) {
             // UNHOOK //
             if(robot.isHooked) {
@@ -116,17 +118,17 @@ public class LimitedAuto extends LinearOpMode {
                 telemetry.addData("Moving, distToMarker: " , distToMarker);
                 telemetry.update();
 
-                robot.drive.turn(angleToMineral);
-                robot.drive.vertical(distToMineral);
-                robot.drive.turn(angleToMarker);
-                robot.drive.vertical(distToMarker);
+                robot.gyrodrive.turn(0.7, angleToMineral);
+                robot.gyrodrive.vertical(0.7, distToMineral, angleToMineral);
+                robot.gyrodrive.turn(0.7, angleToMarker);
+                robot.gyrodrive.vertical(0.7, distToMarker, angleToMarker);
                 // Set Marker
                 telemetry.addData("Currently: ", "DEPLOYING MARKER");
                 telemetry.update();
                 deployMarker();
             } else if (robot.startPosition == StartPosition.crater){
-                robot.drive.vertical(Convert.tileToYeet(.4));
-                robot.drive.turn(180);
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(.4), 0);
+                robot.gyrodrive.turn(0.7, 180);
                 // Set Marker NOT IN LIMITED
                 int angleToMineral;
                 int angleToCrater;
@@ -161,10 +163,10 @@ public class LimitedAuto extends LinearOpMode {
                 telemetry.addData("Moving, distToCrater: " , distToCrater);
                 telemetry.update();
 
-                robot.drive.turn(angleToMineral);
-                robot.drive.vertical(distToMineral);
-                robot.drive.turn(angleToCrater);
-                robot.drive.vertical(distToCrater);
+                robot.gyrodrive.turn(0.7, angleToMineral);
+                robot.gyrodrive.vertical(0.7, distToMineral, angleToMineral);
+                robot.gyrodrive.turn(0.7, angleToCrater);
+                robot.gyrodrive.vertical(0.7, distToCrater, angleToCrater);
             }
             wait1(1000000000);
         }
