@@ -53,8 +53,8 @@ public class AlternateAutoGyro extends LinearOpMode {
                 robot.liftMotor.setPower(-0.5);
                 robot.drive.vertical(Convert.tileToYeet(-.3));
                 robot.drive.horizontal(Convert.tileToYeet(.414));
-                robot.drive.turn(180);
-                robot.drive.vertical(Convert.tileToYeet(-.3));
+                robot.gyrodrive.turn(0.7, 180);
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-.3), 180);
             }
 
             // SCAN GLYPHS //
@@ -90,27 +90,27 @@ public class AlternateAutoGyro extends LinearOpMode {
                 int distToMineral;
                 int distToMarker;
                 if (glyphPosition == LEFT) {
-                    angleToMineral = -30;
-                    angleToMarker = 52;
-                    angleToCrater = 26;
+                    angleToMineral = 160; //180 - 30
+                    angleToMarker = 212; //160 +52
+                    angleToCrater = 238; // 212 +26
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.633); //1.5 but not far enough
                 } else if (glyphPosition == CENTER){
-                    angleToMineral = 0;
-                    angleToMarker = 0;
-                    angleToCrater = 45;
+                    angleToMineral = 180;
+                    angleToMarker = 180;
+                    angleToCrater = 225;
                     distToMineral = Convert.tileToYeet(1.414);
                     distToMarker = Convert.tileToYeet(1.414);
                 } else if (glyphPosition == RIGHT){
-                    angleToMineral = 30;
-                    angleToMarker = -52;
-                    angleToCrater = 64;
+                    angleToMineral = 160;
+                    angleToMarker = 108; //160-52
+                    angleToCrater = 172; //108+64
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.5);
                 } else {
-                    angleToMineral = 30;
-                    angleToMarker = -52;
-                    angleToCrater = -64;
+                    angleToMineral = 160;
+                    angleToMarker = 108; //160-52
+                    angleToCrater = 172; //108+64
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.5);
                     telemetry.addData("GLYPH POSITION NOT DEFINED, Defualting", glyphPosition);
@@ -141,28 +141,29 @@ public class AlternateAutoGyro extends LinearOpMode {
                 telemetry.addData("Glyph Position: ", glyphPosition);
                 telemetry.update();
                 // Set Marker
-                robot.gyrodrive.turn(0.7, -45);
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(2), -45);
-                robot.gyrodrive.turn(0.7, -135); //-135
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(3.535), -135);
-                robot.gyrodrive.turn(0.7, 135); //135
+                robot.gyrodrive.turn(0.7, 135); //180 - 45
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(2), 135);
+                robot.gyrodrive.turn(0.7, 0); // 135 -135
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(3.535), 0);
+                robot.gyrodrive.turn(0.7, 135); //0 + 135
                 robot.gyrodrive.vertical(0.7, Convert.tileToYeet(3), 135);
                 // Park in Crater, While Moving Gold
-                robot.gyrodrive.turn(0.7, -90);
+                robot.gyrodrive.turn(0.7, 45); //135 - 90
                 deployMarker();
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-3), -90);
+                // Park in Crater, While Moving Gold
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-3), 45);
                 wait1(1000);
-                robot.gyrodrive.turn(0.7, 45);
+                robot.gyrodrive.turn(0.7, 90); //45 + 45
                 if (glyphPosition == LEFT) {
-                    robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-1.414), 45);
+                    robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-1.414), 90);
                 } else if (glyphPosition == CENTER) {
-                    robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-2.121),45);
+                    robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-2.121), 90);
                 } else {
-                    robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-2.828),45);
+                    robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-2.828), 90);
                     telemetry.addData("Glyph position may or may not be defined", glyphPosition);
                 }
-                robot.gyrodrive.turn(0.7, 90);
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-2),90);
+                robot.gyrodrive.turn(0.7, 0); // 90 - 90
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-2), 0);
             }
             wait1(1000000000);
         }
