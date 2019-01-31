@@ -121,10 +121,9 @@ public class Robot2017 {
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         imu.initialize(parameters);
-        composeTelemetry();
     }
 
-    void composeTelemetry() {
+    public void composeTelemetry() {
 
         // At the beginning of each telemetry update, grab a bunch of data
         // from the IMU that we will then display in separate lines.
@@ -199,6 +198,10 @@ public class Robot2017 {
      * DRIVETRAIN
      */
 
+    public double getHeading(){
+        return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+    }
+
     public void initDriveTrain() {
         drive = new DriveTrain();
     }
@@ -246,6 +249,13 @@ public class Robot2017 {
             brMotor.setDirection(rightDefaultDir);
         }
 
+        public void vertical(double length) throws InterruptedException {
+            PathSeg path = new PathSeg(-length, -length, -length, -length, time); //Hehe
+            startPath(path);
+            wait1((int) length / 12 * 500);
+            wait1(1000);
+        }
+
         public void horizontal(double length) throws InterruptedException { //Hehe
             PathSeg right = new PathSeg(-length, length, length, -length, time);
             startPath(right);
@@ -274,12 +284,6 @@ public class Robot2017 {
             wait1(1000);
         }
 
-        public void vertical(double length) throws InterruptedException {
-            PathSeg path = new PathSeg(-length, -length, -length, -length, time); //Hehe
-            startPath(path);
-            wait1((int) length / 12 * 500);
-            wait1(1000);
-        }
 
         public void queuePath(PathSeg path) {
             paths.add(path);
@@ -373,8 +377,8 @@ public class Robot2017 {
         static final double     TURN_SPEED              = 0.5;     // Nominal half speed for better accuracy.
 
         static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
-        static final double     P_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
-        static final double     P_DRIVE_COEFF           = 0.15;     // Larger is more responsive, but also less stable
+        static final double     P_TURN_COEFF            = 0.5;     // Larger is more responsive, but also less stable
+        static final double     P_DRIVE_COEFF           = 0.05;     // Larger is more responsive, but also less stable
 
         /**
          *  Method to drive on a fixed compass bearing (angle), based on encoder counts.
@@ -388,9 +392,10 @@ public class Robot2017 {
          *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
          *                   If a relative angle is required, add/subtract from current heading.
          */
+        // DOES NOT WORK WELL FOR DRIVING STRAIGHT, FIX LATER, USE drive.vertical() INSTEAD
         public void vertical ( double speed,
                                 double distance,
-                                double angle) {
+                                double angle) throws InterruptedException {
 
             int     flTarget;
             int     frTarget;
@@ -414,15 +419,15 @@ public class Robot2017 {
             brTarget = brMotor.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
 
             // Set Target and Turn On RUN_TO_POSITION
-            flMotor.setTargetPosition(flTarget);
-            frMotor.setTargetPosition(frTarget);
-            blMotor.setTargetPosition(blTarget);
-            brMotor.setTargetPosition(brTarget);
-
             flMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             frMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             blMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             brMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            flMotor.setTargetPosition(flTarget);
+            frMotor.setTargetPosition(frTarget);
+            blMotor.setTargetPosition(blTarget);
+            brMotor.setTargetPosition(brTarget);
 
             // start motion.
             flMotor.setPower(Range.clip(Math.abs(speed), 0.0, 1.0)); // DONT KNOW WHY RANGE Math.abs(speed)
@@ -441,8 +446,13 @@ public class Robot2017 {
                 if (distance < 0)
                     steer *= -1.0;
 
+                rightSpeed = speed - steer;
+                leftSpeed = speed + steer;
+
+                /*
                 leftSpeed = speed - steer;
                 rightSpeed = speed + steer;
+                */
 
                 // Normalize speeds if either one exceeds +/- 1.0;
                 max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
@@ -481,6 +491,101 @@ public class Robot2017 {
 
         }
 
+        public void horizontal ( double speed,
+                               double distance,
+                               double angle) throws InterruptedException {
+
+            int     flTarget;
+            int     frTarget;
+            int     blTarget;
+            int     brTarget;
+            int     moveCounts;
+            double  max;
+            double  error;
+            double  steer;
+            double backSpeed;
+            double frontSpeed;
+
+
+            // Turn On RUN_TO_POSITION
+
+
+            // Determine new target position, and pass to motor controller
+            flTarget = flMotor.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
+            frTarget = frMotor.getCurrentPosition() - (int) (-distance * COUNTS_PER_INCH);
+            blTarget = blMotor.getCurrentPosition() - (int) (-distance * COUNTS_PER_INCH);
+            brTarget = brMotor.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
+
+            // Set Target and Turn On RUN_TO_POSITION
+            flMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            blMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            brMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            flMotor.setTargetPosition(flTarget);
+            frMotor.setTargetPosition(frTarget);
+            blMotor.setTargetPosition(blTarget);
+            brMotor.setTargetPosition(brTarget);
+
+            // start motion.
+            flMotor.setPower(Range.clip(Math.abs(speed), 0.0, 1.0)); // DONT KNOW WHY RANGE Math.abs(speed)
+            frMotor.setPower(Range.clip(Math.abs(speed), 0.0, 1.0));
+            blMotor.setPower(Range.clip(Math.abs(speed), 0.0, 1.0));
+            brMotor.setPower(Range.clip(Math.abs(speed), 0.0, 1.0));
+
+            // keep looping while we are still active, and BOTH motors are running.
+            while (flMotor.isBusy() && frMotor.isBusy() && blMotor.isBusy() && brMotor.isBusy()) {
+
+                // adjust relative speed based on heading error.
+                error = getError(angle);
+                steer = getSteer(error, P_DRIVE_COEFF);
+
+                // if driving in reverse, the motor correction also needs to be reversed
+                if (distance < 0)
+                    steer *= -1.0;
+
+
+                backSpeed = speed + steer;
+                frontSpeed = speed - steer;
+
+
+                // Normalize speeds if either one exceeds +/- 1.0;
+                max = Math.max(Math.abs(backSpeed), Math.abs(frontSpeed));
+                if (max > 1.0)
+                {
+                    backSpeed /= max;
+                    frontSpeed /= max;
+                }
+
+                flMotor.setPower(frontSpeed);
+                blMotor.setPower(backSpeed);
+                frMotor.setPower(frontSpeed);
+                brMotor.setPower(backSpeed);
+
+                // Display drive status for the driver.
+                telemetry.addData("Err/St",  "%5.1f/%5.1f",  error, steer);
+                telemetry.addData("Target",  "%7d:%7d:%7d:%7d",      flTarget,  frTarget, blTarget,  brTarget);
+                telemetry.addData("Actual",  "%7d:%7d",      flMotor.getCurrentPosition(),
+                        frMotor.getCurrentPosition());
+                telemetry.addData("Speed",   "%5.2f:%5.2f",  frontSpeed, backSpeed);
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            flMotor.setPower(0);
+            frMotor.setPower(0);
+            blMotor.setPower(0);
+            brMotor.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            flMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            blMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            brMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+        }
+
         /**
          *  Method to spin on central axis to point in a new direction.
          *  Move will stop if either of these conditions occur:
@@ -492,13 +597,34 @@ public class Robot2017 {
          *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
          *                   If a relative angle is required, add/subtract from current heading.
          */
-        public void turn (  double speed, double angle) {
+
+        // INCOMPLETE FOR TURNING USE gyrodrive.hybridTurn() INSTEAD
+        public void turn (  double speed, double angle) throws InterruptedException {
+
+            flMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            blMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            brMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // keep looping while we are still active, and not on heading.
             while (!onHeading(speed, angle, P_TURN_COEFF)) { //DELETED WHILE OPMODEACTIVE()
                 // Update telemetry & Allow time for other processes to run.
                 telemetry.update();
+                /*
+                if (!flMotor.isBusy() && !frMotor.isBusy() && !blMotor.isBusy() && !brMotor.isBusy()){
+                    flMotor.setPower(-.5);
+                    frMotor.setPower(.5);
+                    blMotor.setPower(-.5);
+                    brMotor.setPower(.5);
+                }
+                */
             }
+
+            flMotor.setPower(0);
+            frMotor.setPower(0);
+            blMotor.setPower(0);
+            brMotor.setPower(0);
+            drive.wait1(500);
         }
 
         /**
@@ -511,7 +637,7 @@ public class Robot2017 {
          *                   If a relative angle is required, add/subtract from current heading.
          * @param holdTime   Length of time (in seconds) to hold the specified heading.
          */
-        public void hold( double speed, double angle, double holdTime) {
+        public void hold( double speed, double angle, double holdTime) throws InterruptedException {
 
             ElapsedTime holdTimer = new ElapsedTime();
 
@@ -540,7 +666,7 @@ public class Robot2017 {
          * @param PCoeff    Proportional Gain coefficient
          * @return
          */
-        boolean onHeading(double speed, double angle, double PCoeff) {
+        boolean onHeading(double speed, double angle, double PCoeff) throws InterruptedException {
             double   error ;
             double   steer ;
             boolean  onTarget = false ;
@@ -563,15 +689,18 @@ public class Robot2017 {
             }
 
             // Send desired speeds to motors.
+
             flMotor.setPower(leftSpeed);
             blMotor.setPower(leftSpeed);
             frMotor.setPower(rightSpeed);
             brMotor.setPower(rightSpeed);
 
+
             // Display it for the driver.
             telemetry.addData("Target", "%5.2f", angle);
             telemetry.addData("Err/St", "%5.2f/%5.2f", error, steer);
             telemetry.addData("Speed.", "%5.2f:%5.2f", leftSpeed, rightSpeed);
+            telemetry.addData("Actual Speed.", "%5.2f:%5.2f", flMotor.getPower(), frMotor.getPower());
 
             return onTarget;
         }
@@ -582,7 +711,7 @@ public class Robot2017 {
          * @return  error angle: Degrees in the range +/- 180. Centered on the robot's frame of reference
          *          +ve error means the robot should turn LEFT (CCW) to reduce error.
          */
-        public double getError(double targetAngle) {
+        public double getError(double targetAngle) throws InterruptedException {
 
             double robotError;
 
@@ -590,6 +719,20 @@ public class Robot2017 {
             robotError = targetAngle - imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             while (robotError > 180)  robotError -= 360;
             while (robotError <= -180) robotError += 360;
+
+            if (Math.abs(robotError)== 180){
+                robotError = 180;
+            }
+
+            /*
+            if (Math.abs(robotError) > 160 && Math.abs(robotError) < 181){
+                if (robotError < 0){
+                    drive.turn(-45);
+                } else {
+                    drive.turn(45);
+                }
+                robotError = targetAngle - imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+            }*/
             return robotError;
         }
 
@@ -601,6 +744,48 @@ public class Robot2017 {
          */
         public double getSteer(double error, double PCoeff) {
             return Range.clip(error * PCoeff, -1, 1);
+        }
+
+        private int correctCount = 0;
+        /*
+         * @param gyroTarget The target heading in degrees, between 0 and 360
+         * @param gyroRange The acceptable range off target in degrees, usually 1 or 2
+         * @param gyroActual The current heading in degrees, between 0 and 360
+         * @param minSpeed The minimum power to apply in order to turn (e.g. 0.05 when moving or 0.15 when stopped)
+         * @param addSpeed The maximum additional speed to apply in order to turn (proportional component), e.g. 0.3
+         * @return The number of times in a row the heading has been in the range
+         */
+
+        // boolean doneTurn1 = this.gyroCorrect(90.0, 1., heading, 0.1, 0.3) > 10;
+
+        public void newGyroTurn(double maxSpeed, double gyroTarget){
+            correctCount = 0;
+            while (correctCount < 10) {
+                newGyroTurn(gyroTarget, 2.0, getHeading(), .05, maxSpeed-.05);
+            }
+        }
+
+        public int newGyroTurn(double gyroTarget, double gyroRange, double gyroActual, double minSpeed, double addSpeed) {
+            double delta = (gyroTarget - gyroActual + 360.0) % 360.0; //the difference between target and actual mod 360
+            if (delta > 180.0) delta -= 360.0; //makes delta between -180 and 180
+            if (Math.abs(delta) > gyroRange) { //checks if delta is out of range
+                this.correctCount = 0;
+                double gyroMod = delta / 45.0; //scale from -1 to 1 if delta is less than 45 degrees
+                if (Math.abs(gyroMod) > 1.0) gyroMod = Math.signum(gyroMod); //set gyromod to 1 or -1 if the error is more than 45 degrees
+                this.newTurn(minSpeed * Math.signum(gyroMod) + addSpeed * gyroMod);
+            }
+            else {
+                this.correctCount++;
+                this.newTurn(0.0);
+            }
+            return this.correctCount;
+        }
+
+        public void newTurn(double sPower) {
+            flMotor.setPower(+ sPower);
+            blMotor.setPower(+ sPower);
+            frMotor.setPower(- sPower);
+            brMotor.setPower(- sPower);
         }
     }
 }

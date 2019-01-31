@@ -19,7 +19,7 @@ import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.LEFT;
 import static com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector.GoldLocation.RIGHT;
 
-@TeleOp(name = "LimitAutonomous", group = "Auto")
+@TeleOp(name = "LimitAutonomousGyro", group = "Auto")
 //originally had it as TeleOp b/c Autonomous wasn't working, but changed back over
 public class LimitedAutoGyro extends LinearOpMode {
     private Robot2017 robot;
@@ -39,23 +39,27 @@ public class LimitedAutoGyro extends LinearOpMode {
         waitForStart();
         robot.imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
 
+
         while (opModeIsActive()) {
+            robot.composeTelemetry();
             // UNHOOK //
             if(robot.isHooked) {
                 robot.liftMotor.setPower(-0.75);
                 wait1(250);
                 robot.pulleyHolder.setPosition(.655f); //latch is .168
-                wait1(1000);
+                wait1(1500);
                 robot.liftMotor.setPower(1);
                 wait1(1500);
-                robot.drive.vertical(Convert.tileToYeet(-.1));
-                robot.drive.horizontal(Convert.tileToYeet(-0.414));
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-.75), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(.05), robot.getHeading());
+                robot.gyrodrive.horizontal(0.7, Convert.tileToYeet3(-0.207), robot.getHeading());
                 robot.liftMotor.setPower(-0.5);
-                robot.drive.vertical(Convert.tileToYeet(-.3));
-                robot.drive.horizontal(Convert.tileToYeet(.414));
-                robot.gyrodrive.turn(0.7, 180);
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-.3), 180);
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-.25), robot.getHeading());
+                robot.gyrodrive.horizontal(0.7, Convert.tileToYeet3(.207), robot.getHeading());
             }
+            robot.gyrodrive.newGyroTurn(0.7, 180);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-0.207), 180);
+
 
             // SCAN GLYPHS //
             SamplingOrderDetector.GoldLocation glyphPosition;
@@ -97,8 +101,8 @@ public class LimitedAutoGyro extends LinearOpMode {
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.5); //1.5 but not far enough
                 } else if (glyphPosition == CENTER){
-                    angleToMineral = 180; // 180 + 0
-                    angleToMarker = 180; // 180 + 0
+                    angleToMineral = 179; // 180 + 0
+                    angleToMarker = 179; // 180 + 0
                     angleToCrater = 135; // 180- 45
                     distToMineral = Convert.tileToYeet(1.3);
                     distToMarker = Convert.tileToYeet(1.414);
@@ -122,18 +126,19 @@ public class LimitedAutoGyro extends LinearOpMode {
                 telemetry.addData("Moving, distToMarker: " , distToMarker);
                 telemetry.update();
 
-                robot.gyrodrive.turn(0.7, angleToMineral);
-                robot.gyrodrive.vertical(0.7, distToMineral, angleToMineral);
-                robot.gyrodrive.turn(0.7, angleToMarker);
-                robot.gyrodrive.vertical(0.7, distToMarker, angleToMarker);
+                robot.gyrodrive.newGyroTurn(0.7, angleToMineral);
+                robot.gyrodrive.vertical(-0.7, distToMineral, robot.getHeading());
+                robot.gyrodrive.newGyroTurn(0.7, angleToMarker);
+                robot.gyrodrive.vertical(-0.7, distToMarker, robot.getHeading());
 
                 // Set Marker
                 telemetry.addData("Currently: ", "DEPLOYING MARKER");
                 telemetry.update();
                 deployMarker();
             } else if (robot.startPosition == StartPosition.crater){
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(.4), 180);
-                robot.gyrodrive.turn(0.7, 0);
+                robot.drive.vertical(Convert.tileToYeet(.4));
+                robot.gyrodrive.newGyroTurn(0.7, 90);
+                robot.gyrodrive.newGyroTurn(0.7, 0);
                 // Set Marker NOT IN LIMITED
                 int angleToMineral;
                 int angleToCrater;
@@ -168,10 +173,12 @@ public class LimitedAutoGyro extends LinearOpMode {
                 telemetry.addData("Moving, distToCrater: " , distToCrater);
                 telemetry.update();
 
-                robot.gyrodrive.turn(0.7, angleToMineral);
-                robot.gyrodrive.vertical(0.7, distToMineral, angleToMineral);
-                robot.gyrodrive.turn(0.7, angleToCrater);
-                robot.gyrodrive.vertical(0.7, distToCrater, angleToCrater);
+                robot.gyrodrive.newGyroTurn(0.7, angleToMineral);
+                robot.gyrodrive.vertical(-0.7, distToMineral, robot.getHeading());
+                robot.gyrodrive.newGyroTurn(0.7, angleToCrater);
+
+                robot.drive.resetMotors();
+                robot.drive.vertical(distToCrater);
             }
             wait1(1000000000);
         }

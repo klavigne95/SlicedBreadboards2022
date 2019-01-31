@@ -40,22 +40,25 @@ public class AlternateAutoGyro extends LinearOpMode {
         robot.imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
 
         while (opModeIsActive()) {
+            robot.composeTelemetry();
             // UNHOOK //
             if(robot.isHooked) {
                 robot.liftMotor.setPower(-0.75);
                 wait1(250);
                 robot.pulleyHolder.setPosition(.655f); //latch is .168
-                wait1(1000);
+                wait1(1500);
                 robot.liftMotor.setPower(1);
                 wait1(1500);
-                robot.drive.vertical(Convert.tileToYeet(-.1));
-                robot.drive.horizontal(Convert.tileToYeet(-0.414));
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-.75), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(.05), robot.getHeading());
+                robot.gyrodrive.horizontal(0.7, Convert.tileToYeet3(-0.207), robot.getHeading());
                 robot.liftMotor.setPower(-0.5);
-                robot.drive.vertical(Convert.tileToYeet(-.3));
-                robot.drive.horizontal(Convert.tileToYeet(.414));
-                robot.gyrodrive.turn(0.7, 180);
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-.3), 180);
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-.25), robot.getHeading());
+                robot.gyrodrive.horizontal(0.7, Convert.tileToYeet3(.207), robot.getHeading());
             }
+            robot.gyrodrive.newGyroTurn(0.7, 180);
+            robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-0.207), 180);
+
 
             // SCAN GLYPHS //
             SamplingOrderDetector.GoldLocation glyphPosition;
@@ -96,8 +99,8 @@ public class AlternateAutoGyro extends LinearOpMode {
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.633); //1.5 but not far enough
                 } else if (glyphPosition == CENTER){
-                    angleToMineral = 180;
-                    angleToMarker = 180;
+                    angleToMineral = 179;
+                    angleToMarker = 179;
                     angleToCrater = 225;
                     distToMineral = Convert.tileToYeet(1.414);
                     distToMarker = Convert.tileToYeet(1.414);
@@ -121,10 +124,10 @@ public class AlternateAutoGyro extends LinearOpMode {
                 telemetry.addData("Moving, distToMarker: " , distToMarker);
                 telemetry.update();
 
-                robot.gyrodrive.turn(0.7, angleToMineral);
-                robot.gyrodrive.vertical(0.7, distToMineral, angleToMineral);
-                robot.gyrodrive.turn(0.7, angleToMarker);
-                robot.gyrodrive.vertical(0.7, distToMarker, angleToMarker);
+                robot.gyrodrive.newGyroTurn(0.7, angleToMineral);
+                robot.gyrodrive.vertical(-0.7, distToMineral, robot.getHeading());
+                robot.gyrodrive.newGyroTurn(0.7, angleToMarker);
+                robot.gyrodrive.vertical(-0.7, distToMarker, robot.getHeading());
 
                 // Set Marker
                 telemetry.addData("Currently: ", "DEPLOYING MARKER");
@@ -135,35 +138,38 @@ public class AlternateAutoGyro extends LinearOpMode {
                 telemetry.addData("Moving, distToCrater: " , Convert.tileToYeet(4.5));
                 telemetry.update();
 
-                robot.gyrodrive.turn(0.7, angleToCrater);
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(4.5), angleToCrater); // 24*3.5/1.574803 Moving Across 3.5ish tiles
-            } else if (robot.startPosition == StartPosition.crater){
+                robot.gyrodrive.newGyroTurn(0.7, angleToCrater);
+
+                robot.drive.resetMotors();
+                robot.drive.vertical(Convert.tileToYeet2(-4.5));            } else if (robot.startPosition == StartPosition.crater){
                 telemetry.addData("Glyph Position: ", glyphPosition);
                 telemetry.update();
                 // Set Marker
-                robot.gyrodrive.turn(0.7, 135); //180 - 45
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(2), 135);
-                robot.gyrodrive.turn(0.7, 0); // 135 -135
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(3.535), 0);
-                robot.gyrodrive.turn(0.7, 135); //0 + 135
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(3), 135);
+                robot.gyrodrive.newGyroTurn(0.7, 135); //180 - 45
+                robot.gyrodrive.vertical(-0.7, Convert.tileToYeet(2), robot.getHeading());
+                robot.gyrodrive.newGyroTurn(0.7, 0); // 135 -135
+                robot.gyrodrive.vertical(-0.7, Convert.tileToYeet(3.535), robot.getHeading());
+                robot.gyrodrive.newGyroTurn(0.7, 135); //0 + 135
+                robot.gyrodrive.vertical(-0.7, Convert.tileToYeet(3), robot.getHeading());
                 // Park in Crater, While Moving Gold
-                robot.gyrodrive.turn(0.7, 45); //135 - 90
+                robot.gyrodrive.newGyroTurn(0.7, 45); //135 - 90
                 deployMarker();
                 // Park in Crater, While Moving Gold
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-3), 45);
+                robot.gyrodrive.vertical(-0.7, Convert.tileToYeet(-3), robot.getHeading());
                 wait1(1000);
-                robot.gyrodrive.turn(0.7, 90); //45 + 45
+                robot.gyrodrive.newGyroTurn(0.7, 90); //45 + 45
                 if (glyphPosition == LEFT) {
-                    robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-1.414), 90);
+                    robot.gyrodrive.vertical(-0.7, Convert.tileToYeet(-1.414), robot.getHeading());
                 } else if (glyphPosition == CENTER) {
-                    robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-2.121), 90);
+                    robot.gyrodrive.vertical(-0.7, Convert.tileToYeet(-2.121), robot.getHeading());
                 } else {
-                    robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-2.828), 90);
+                    robot.gyrodrive.vertical(-0.7, Convert.tileToYeet(-2.828), robot.getHeading());
                     telemetry.addData("Glyph position may or may not be defined", glyphPosition);
                 }
-                robot.gyrodrive.turn(0.7, 0); // 90 - 90
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-2), 0);
+                robot.gyrodrive.newGyroTurn(0.7, 0); // 90 - 90
+
+                robot.drive.resetMotors();
+                robot.drive.vertical(Convert.tileToYeet2(-2));
             }
             wait1(1000000000);
         }
