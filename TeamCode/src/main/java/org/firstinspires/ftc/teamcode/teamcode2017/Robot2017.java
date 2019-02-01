@@ -194,6 +194,14 @@ public class Robot2017 {
         return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
     }
 
+    public void setMarkerDown(){
+        markerServo.setPosition(.487f);
+    }
+
+    public void setMarkerUp(){
+        markerServo.setPosition(.637f);
+    }
+
     /**
      * DRIVETRAIN
      */

@@ -49,15 +49,14 @@ public class AlternateAutoGyro extends LinearOpMode {
                 wait1(1500);
                 robot.liftMotor.setPower(1);
                 wait1(1500);
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-.75), robot.getHeading());
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(.05), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-.4), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(.1), robot.getHeading());
                 robot.gyrodrive.horizontal(0.7, Convert.tileToYeet3(-0.207), robot.getHeading());
                 robot.liftMotor.setPower(-0.5);
-                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-.25), robot.getHeading());
+                robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-.1), robot.getHeading());
                 robot.gyrodrive.horizontal(0.7, Convert.tileToYeet3(.207), robot.getHeading());
             }
             robot.gyrodrive.newGyroTurn(0.7, 180);
-            robot.gyrodrive.vertical(0.7, Convert.tileToYeet(-0.207), 180);
 
 
             // SCAN GLYPHS //
@@ -141,7 +140,8 @@ public class AlternateAutoGyro extends LinearOpMode {
                 robot.gyrodrive.newGyroTurn(0.7, angleToCrater);
 
                 robot.drive.resetMotors();
-                robot.drive.vertical(Convert.tileToYeet2(-4.5));            } else if (robot.startPosition == StartPosition.crater){
+                robot.drive.vertical(Convert.tileToYeet2(-4.5));
+            } else if (robot.startPosition == StartPosition.crater){
                 telemetry.addData("Glyph Position: ", glyphPosition);
                 telemetry.update();
                 // Set Marker

@@ -14,7 +14,7 @@ public class PathSeg {
     public double bld;
     public double brd;
     //desired speed
-    public static double speed = 0.75;
+    public static double speed = 1;
     //encoder tick target for motors
     public int flTarget;
     public int frTarget;
