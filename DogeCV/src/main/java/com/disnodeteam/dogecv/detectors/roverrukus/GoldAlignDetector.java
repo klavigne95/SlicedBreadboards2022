@@ -106,9 +106,9 @@ public class GoldAlignDetector extends DogeCVDetector {
         double alignXMax = alignX +(alignSize / 2); // Max X pos in pixels
         double xPos; // Current Gold X Pos
 
-        Imgproc.line(displayMat, new Point(0, ((1280 * 2) / 5.5)), new Point(600, ((1280 * 2) / 5.5)), new Scalar(0,255,0), 4);
+        Imgproc.line(displayMat, new Point(0, 300), new Point(600, 300), new Scalar(0,255,0), 4);
 
-        if(bestRect != null && bestRect.y < ((1280 * 2) / 5.5)){
+        if(bestRect != null && bestRect.y > 300){
             // Show chosen result
             Imgproc.rectangle(displayMat, bestRect.tl(), bestRect.br(), new Scalar(255,0,0),4);
             Imgproc.putText(displayMat, "Chosen", bestRect.tl(),0,1,new Scalar(255,255,255));

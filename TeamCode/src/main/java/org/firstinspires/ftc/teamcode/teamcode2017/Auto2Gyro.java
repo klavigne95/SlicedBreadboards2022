@@ -92,26 +92,26 @@ public class Auto2Gyro extends LinearOpMode {
                 int distToMineral;
                 int distToMarker;
                 if (glyphPosition == LEFT) {
-                    angleToMineral = 160; //180 - 30
-                    angleToMarker = 212; // 160 + 52
+                    angleToMineral = 150; //180 - 30
+                    angleToMarker = -160; // 160 + 52
                     angleToCrater = -135; // 212 - 64
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.5); //1.5 but not far enough
                 } else if (glyphPosition == CENTER){
-                    angleToMineral = 179; // 180 + 0
-                    angleToMarker = 179; // 180 + 0
+                    angleToMineral = 180; // 180 + 0
+                    angleToMarker = 180; // 180 + 0
                     angleToCrater = -135; // 180- 45 // CHANGED
                     distToMineral = Convert.tileToYeet(1.3);
                     distToMarker = Convert.tileToYeet(1.414);
                 } else if (glyphPosition == RIGHT){
-                    angleToMineral = 210; // 180 + 30
-                    angleToMarker = 158; //210 -52
+                    angleToMineral = -150; // 180 + 30
+                    angleToMarker = 160; //210 -52
                     angleToCrater = -135; // 158 -26
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.5);
                 } else {
-                    angleToMineral = 210; // 180 + 30
-                    angleToMarker = 158; //210 -52
+                    angleToMineral = -150; // 180 + 30
+                    angleToMarker = 160; //210 -52
                     angleToCrater = -135; // 158 -26
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.5);
@@ -145,6 +145,7 @@ public class Auto2Gyro extends LinearOpMode {
             } else if (robot.startPosition == StartPosition.crater) {
                 telemetry.addData("Glyph Position: ", glyphPosition);
                 telemetry.update();
+                robot.gyrodrive.horizontal(0.8, Convert.inchesToYeet(-6.0), 180);
                 // Set Marker
                 robot.gyrodrive.newGyroTurn(0.8,-135); //180 - 45
                 robot.gyrodrive.vertical(-1, Convert.tileToYeet(2.05), -135);//1.5
