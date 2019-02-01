@@ -94,27 +94,27 @@ public class LimitedAutoGyro extends LinearOpMode {
                 int distToMineral;
                 int distToMarker;
                 if (glyphPosition == LEFT) {
-                    angleToMineral = 160; //180 - 30
-                    angleToMarker = 212; // 160 + 52
-                    angleToCrater = 148; // 212 - 64
+                    angleToMineral = 150; //180 - 30
+                    angleToMarker = -160; // 160 + 52
+                    angleToCrater = -135; // 212 - 64
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.5); //1.5 but not far enough
                 } else if (glyphPosition == CENTER){
-                    angleToMineral = 179; // 180 + 0
-                    angleToMarker = 179; // 180 + 0
-                    angleToCrater = 135; // 180- 45
+                    angleToMineral = 180; // 180 + 0
+                    angleToMarker = 180; // 180 + 0
+                    angleToCrater = -135; // 180- 45 // CHANGED
                     distToMineral = Convert.tileToYeet(1.3);
                     distToMarker = Convert.tileToYeet(1.414);
                 } else if (glyphPosition == RIGHT){
-                    angleToMineral = 210; // 180 + 30
-                    angleToMarker = 158; //210 -52
-                    angleToCrater = 132; // 158 -26
+                    angleToMineral = -150; // 180 + 30
+                    angleToMarker = 160; //210 -52
+                    angleToCrater = -135; // 158 -26
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.5);
                 } else {
-                    angleToMineral = 210; // 180 + 30
-                    angleToMarker = 158; //210 -52
-                    angleToCrater = 132; // 158 -26
+                    angleToMineral = -150; // 180 + 30
+                    angleToMarker = 160; //210 -52
+                    angleToCrater = -135; // 158 -26
                     distToMineral = Convert.tileToYeet(1.633);
                     distToMarker = Convert.tileToYeet(1.5);
                     telemetry.addData("GLYPH POSITION NOT DEFINED, Defualting", glyphPosition);
@@ -126,14 +126,15 @@ public class LimitedAutoGyro extends LinearOpMode {
                 telemetry.update();
 
                 robot.gyrodrive.newGyroTurn(0.7, angleToMineral);
-                robot.gyrodrive.vertical(-0.7, distToMineral, robot.getHeading());
+                robot.gyrodrive.vertical(-0.7, distToMineral, angleToMineral);
                 robot.gyrodrive.newGyroTurn(0.7, angleToMarker);
-                robot.gyrodrive.vertical(-0.7, distToMarker, robot.getHeading());
+                robot.gyrodrive.vertical(-0.7, distToMarker, angleToMarker);
 
                 // Set Marker
                 telemetry.addData("Currently: ", "DEPLOYING MARKER");
                 telemetry.update();
                 deployMarker();
+                robot.gyrodrive.vertical(-0.7, Convert.tileToYeet(.207), robot.getHeading());
             } else if (robot.startPosition == StartPosition.crater){
                 robot.drive.vertical(Convert.tileToYeet(.4));
                 robot.gyrodrive.newGyroTurn(0.7, 90);
@@ -173,7 +174,7 @@ public class LimitedAutoGyro extends LinearOpMode {
                 telemetry.update();
 
                 robot.gyrodrive.newGyroTurn(0.7, angleToMineral);
-                robot.gyrodrive.vertical(-0.7, distToMineral, robot.getHeading());
+                robot.gyrodrive.vertical(-0.7, distToMineral, angleToMineral);
                 robot.gyrodrive.newGyroTurn(0.7, angleToCrater);
 
                 robot.drive.resetMotors();
