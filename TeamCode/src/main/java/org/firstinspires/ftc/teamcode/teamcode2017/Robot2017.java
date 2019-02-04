@@ -27,21 +27,11 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * This is NOT an opmode.
- * <p>
+ *
  * This class can be used to define all the specific hardware for a single robot.
  */
 public class Robot2017 {
-    //servo positions go from 0 to 1.0, must add suffix to make it a float because Java acts stupid sometimes
-    //final float jewelservodown = .90f;
-    //final float jewelservoup = .20f;
-    //final float griplin = 0.04f;
-    //final float griprin = .90f;
-    //final float griplout = .42f;
-    //final float griprout = .48f;
-    public float markerUp = .20f;
-    public float markerDown = .90f;
-    public StartPosition startPosition;
-    public boolean isHooked;
+    //Hardware Vars
     public DcMotor flMotor;
     public DcMotor frMotor;
     public DcMotor blMotor;
@@ -50,16 +40,24 @@ public class Robot2017 {
     public DcMotor liftMotor;
     public DcMotor negLiftMotor;
     public Servo pulleyHolder;
+    public BNO055IMU imu;
+
+    //Drive Trains
     public DriveTrain drive;
     public GyroDriveTrain gyrodrive;
+
+    //Init variables
+    public StartPosition startPosition;
+    public boolean isHooked;
+
+    //FTC Set-Up
     private HardwareMap hwMap;
     private Telemetry telemetry;
     private ElapsedTime time;
 
-    BNO055IMU imu;
-    Orientation angles;
-    Acceleration gravity;
-
+    /*
+        ROBOT CLASS
+     */
     public Robot2017() {
 
     }
@@ -69,6 +67,7 @@ public class Robot2017 {
         this.startPosition = pos;
     }
 
+    //FTC Setup methods
     public void setTelemetry(Telemetry t) {
         this.telemetry = t;
     }
@@ -78,7 +77,9 @@ public class Robot2017 {
     }
 
 
-    /* Initialize standard Hardware interfaces */
+    /*
+        INITIALIZATION - Initialize standard Hardware interfaces
+    */
     public void init(HardwareMap hwMap) {
         initHardwareMap(hwMap);
         initDriveTrain();
@@ -99,17 +100,24 @@ public class Robot2017 {
         markerServo = hwMap.servo.get("markerServo");
         pulleyHolder = hwMap.servo.get("pulleyHolder");
         imu = hwMap.get(BNO055IMU.class, "imu");
-        //lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //armmotor = hwMap.dcMotor.get("armmotor");
-        //jewelservo = hwMap.servo.get("jewelservo");
-        //gripl = hwMap.servo.get("gripl");
-        //gripr = hwMap.servo.get("gripr");
-        //jewelservo.setDirection(Servo.Direction.FORWARD);
-        //cs = hwMap.colorSensor.get("colorSensor");
-        //cs.enableLed(true);
-
-
     }
+
+
+    /*
+        ACTION METHODS - Things to make reading/writing (particularly Autonomous) easier
+     */
+    public void setMarkerDown(){ markerServo.setPosition(.487f); }
+
+    public void setMarkerUp(){ markerServo.setPosition(.637f); }
+
+    public double getHeading(){ return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle; }
+
+
+    /*
+        IMU/ GYROSCOPE STUFF
+    */
+    Orientation angles;
+    Acceleration gravity;
 
     public void initIMU(){
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -123,7 +131,7 @@ public class Robot2017 {
         imu.initialize(parameters);
     }
 
-    public void composeTelemetry() {
+    public void composeIMUTelemetry() {
 
         // At the beginning of each telemetry update, grab a bunch of data
         // from the IMU that we will then display in separate lines.
@@ -182,10 +190,6 @@ public class Robot2017 {
                 });
     }
 
-    //----------------------------------------------------------------------------------------------
-    // Formatting
-    //----------------------------------------------------------------------------------------------
-
     String formatAngle(AngleUnit angleUnit, double angle) {
         return formatDegrees(AngleUnit.DEGREES.fromUnit(angleUnit, angle));
     }
@@ -194,22 +198,10 @@ public class Robot2017 {
         return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
     }
 
-    public void setMarkerDown(){
-        markerServo.setPosition(.487f);
-    }
 
-    public void setMarkerUp(){
-        markerServo.setPosition(.637f);
-    }
-
-    /**
-     * DRIVETRAIN
-     */
-
-    public double getHeading(){
-        return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-    }
-
+    /*
+        NORMAL DRIVE TRAIN - issues when both trains are together
+    */
     public void initDriveTrain() {
         drive = new DriveTrain();
     }
@@ -223,8 +215,8 @@ public class Robot2017 {
                 (WHEEL_DIAMETER_INCHES * Math.PI);
         static final double ROBOT_WIDTH = 14.75;
         static final double TURN_LENGTH = ROBOT_WIDTH * Math.PI / 4;
-        DcMotor.Direction leftDefaultDir = DcMotor.Direction.FORWARD; //Hehe
-        DcMotor.Direction rightDefaultDir = DcMotor.Direction.REVERSE; //Hehe
+        DcMotor.Direction leftDefaultDir = DcMotor.Direction.FORWARD;
+        DcMotor.Direction rightDefaultDir = DcMotor.Direction.REVERSE;
 
 
         Queue<PathSeg> paths = new LinkedBlockingQueue();
@@ -271,6 +263,13 @@ public class Robot2017 {
             wait1(1000);
         }
 
+        public void turn(int degree) throws InterruptedException { //Hehe
+            PathSeg turn = new PathSeg(-2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, -2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, time);
+            startPath(turn);
+            wait1(Math.abs(degree * 10));
+            wait1(1000);
+        }
+
         public void turnRight() throws InterruptedException { //Hehe
             PathSeg left = new PathSeg(-2 * TURN_LENGTH, 2 * TURN_LENGTH, -2 * TURN_LENGTH, 2 * TURN_LENGTH, time);
             startPath(left);
@@ -283,24 +282,6 @@ public class Robot2017 {
             startPath(right);
             wait1(2000);
         }
-
-        //GYROSCOPE!
-        public void turn(int degree) throws InterruptedException { //Hehe
-            PathSeg turn = new PathSeg(-2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, -2 * TURN_LENGTH * degree / 90, 2 * TURN_LENGTH * degree / 90, time);
-            startPath(turn);
-            wait1(Math.abs(degree * 10));
-            wait1(1000);
-        }
-
-
-        public void queuePath(PathSeg path) {
-            paths.add(path);
-        }
-
-        public void startPath() {
-            startPath(paths.peek());
-        }
-
         private void startPath(PathSeg path) {
 
             // Turn On RUN_TO_POSITION
@@ -349,6 +330,14 @@ public class Robot2017 {
             return true;
         }
 
+        public void queuePath(PathSeg path) {
+            paths.add(path);
+        }
+
+        public void startPath() {
+            startPath(paths.peek());
+        }
+
         public void stopCurrPath() {
             removePath(paths.peek());
         }
@@ -367,6 +356,10 @@ public class Robot2017 {
         }
     }
 
+
+    /*
+        GYROSCOPE DRIVE TRAIN - issues when both trains are together
+    */
     public void initGyroDriveTrain() { gyrodrive = new GyroDriveTrain(); }
 
     public class GyroDriveTrain{
@@ -381,8 +374,8 @@ public class Robot2017 {
 
         // These constants define the desired driving/control characteristics
         // The can/should be tweaked to suite the specific robot drive train.
-        static final double     DRIVE_SPEED             = 0.7;     // Nominal speed for better accuracy.
-        static final double     TURN_SPEED              = 0.5;     // Nominal half speed for better accuracy.
+        static final double     DFLT_DRIVE_SPEED             = 0.7;     // Nominal speed for better accuracy.
+        static final double     DFLT_TURN_SPEED              = 0.5;     // Nominal half speed for better accuracy.
 
         static final double     HEADING_THRESHOLD       = 1 ;      // As tight as we can make it with an integer gyro
         static final double     P_TURN_COEFF            = 0.5;     // Larger is more responsive, but also less stable
@@ -400,7 +393,6 @@ public class Robot2017 {
          *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
          *                   If a relative angle is required, add/subtract from current heading.
          */
-        // DOES NOT WORK WELL FOR DRIVING STRAIGHT, FIX LATER, USE drive.vertical() INSTEAD
         public void vertical ( double speed,
                                 double distance,
                                 double angle) throws InterruptedException {
@@ -415,10 +407,6 @@ public class Robot2017 {
             double  steer;
             double  leftSpeed;
             double  rightSpeed;
-
-
-            // Turn On RUN_TO_POSITION
-
 
             // Determine new target position, and pass to motor controller
             flTarget = flMotor.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
@@ -437,7 +425,7 @@ public class Robot2017 {
             blMotor.setTargetPosition(blTarget);
             brMotor.setTargetPosition(brTarget);
 
-            // start motion.
+            // Start motion.
             flMotor.setPower(Range.clip(Math.abs(speed), 0.0, 1.0)); // DONT KNOW WHY RANGE Math.abs(speed)
             frMotor.setPower(Range.clip(Math.abs(speed), 0.0, 1.0));
             blMotor.setPower(Range.clip(Math.abs(speed), 0.0, 1.0));
@@ -513,10 +501,6 @@ public class Robot2017 {
             double  steer;
             double backSpeed;
             double frontSpeed;
-
-
-            // Turn On RUN_TO_POSITION
-
 
             // Determine new target position, and pass to motor controller
             flTarget = flMotor.getCurrentPosition() + (int) (-distance * COUNTS_PER_INCH);
@@ -594,6 +578,9 @@ public class Robot2017 {
 
         }
 
+        /*
+            OLLLLLD TURN
+
         /**
          *  Method to spin on central axis to point in a new direction.
          *  Move will stop if either of these conditions occur:
@@ -605,8 +592,7 @@ public class Robot2017 {
          *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
          *                   If a relative angle is required, add/subtract from current heading.
          */
-
-        // INCOMPLETE FOR TURNING USE gyrodrive.hybridTurn() INSTEAD
+        /*
         public void turn (  double speed, double angle) throws InterruptedException {
 
             flMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -618,14 +604,6 @@ public class Robot2017 {
             while (!onHeading(speed, angle, P_TURN_COEFF)) { //DELETED WHILE OPMODEACTIVE()
                 // Update telemetry & Allow time for other processes to run.
                 telemetry.update();
-                /*
-                if (!flMotor.isBusy() && !frMotor.isBusy() && !blMotor.isBusy() && !brMotor.isBusy()){
-                    flMotor.setPower(-.5);
-                    frMotor.setPower(.5);
-                    blMotor.setPower(-.5);
-                    brMotor.setPower(.5);
-                }
-                */
             }
 
             flMotor.setPower(0);
@@ -634,6 +612,7 @@ public class Robot2017 {
             brMotor.setPower(0);
             drive.wait1(500);
         }
+        */
 
         /**
          *  Method to obtain & hold a heading for a finite amount of time
@@ -731,16 +710,6 @@ public class Robot2017 {
             if (Math.abs(robotError)== 180){
                 robotError = 180;
             }
-
-            /*
-            if (Math.abs(robotError) > 160 && Math.abs(robotError) < 181){
-                if (robotError < 0){
-                    drive.turn(-45);
-                } else {
-                    drive.turn(45);
-                }
-                robotError = targetAngle - imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-            }*/
             return robotError;
         }
 
@@ -763,17 +732,14 @@ public class Robot2017 {
          * @param addSpeed The maximum additional speed to apply in order to turn (proportional component), e.g. 0.3
          * @return The number of times in a row the heading has been in the range
          */
-
-        // boolean doneTurn1 = this.gyroCorrect(90.0, 1., heading, 0.1, 0.3) > 10;
-
-        public void newGyroTurn(double maxSpeed, double gyroTarget){
+        public void turn(double maxSpeed, double gyroTarget){
             correctCount = 0;
             while (correctCount < 10) {
-                newGyroTurn(gyroTarget, 2.0, getHeading(), .05, maxSpeed-.05);
+                turn(gyroTarget, 2.0, getHeading(), .05, maxSpeed-.05);
             }
         }
 
-        public int newGyroTurn(double gyroTarget, double gyroRange, double gyroActual, double minSpeed, double addSpeed) {
+        public int turn(double gyroTarget, double gyroRange, double gyroActual, double minSpeed, double addSpeed) {
             double delta = (gyroTarget - gyroActual + 360.0) % 360.0; //the difference between target and actual mod 360
             if (delta > 180.0) delta -= 360.0; //makes delta between -180 and 180
             if (Math.abs(delta) > gyroRange) { //checks if delta is out of range

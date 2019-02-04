@@ -27,7 +27,7 @@ public class yeet extends LinearOpMode {
         // Running
         waitForStart();
         while (opModeIsActive()) {
-            robot.gyrodrive.horizontal(0.7, 10, robot.getHeading());
+            robot.gyrodrive.vertical(0.7, 10, robot.getHeading());
 
             TimeUnit.MILLISECONDS.sleep(1000000000);
             idle(); // idle sometimes is weird soooo wait ^
